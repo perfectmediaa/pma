@@ -44,7 +44,10 @@ class User extends Authenticatable
         return $this->hasOne('App\album');
     }
     public function wallet(){
-        return $this->hasOne('App\User\wallet');
+        return $this->hasOne('App\User\Wallet');
+    }
+    public function modelform(){
+        return $this->hasOne('App\Modelform');
     }
 
     protected static function boot(){

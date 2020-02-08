@@ -45,7 +45,7 @@ class HomeController extends Controller
             return view('user.update', compact('id'));
         }
         else{
-            return "not autj";
+            return "not auth";
         }
        
     }

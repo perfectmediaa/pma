@@ -62,5 +62,5 @@ class Userscontroller extends Controller
         return response()->json($request->experience);
         
     }
-    
+   
 }

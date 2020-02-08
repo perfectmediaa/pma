@@ -22,6 +22,9 @@ Route::get('/info', 'HomeController@info')->name('info');
 Route::get('/update', 'HomeController@update')->name('update');
 Route::post('/update', 'HomeController@store')->name('store');
 Route::get('/photos', 'HomeController@photos')->name('photos');
+Route::get('/form', 'User\UserController@modelform')->name('modalform');
+Route::post('/form', 'User\UserController@formStore')->name('formStore');
+
 Route::get('/video', function(){
     return view('video');
 });
