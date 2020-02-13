@@ -17,64 +17,100 @@
     </div>
     <br>
     @endif
-    <h3> Add New Album </h3>
-    <div class="row pt-20">
-    <form id="imageUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog modal-confirm">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title">Awesome!</h4>
+              </div>
+              <div class="modal-body">
+                  <p class="text-center">Your operation has been completed.</p>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+              </div>
+          </div>
+      </div>
+  </div>   
+  <div id="myMod" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Opps!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="err"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <a href="{{route('admin.all.videos')}}"> <button class="btn btn-success mx-3">All videos</button></a>
+  </div>    
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="py-3 bg-success text-white text-center"> Add New video </h4>
+      <form id="VideoUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
   
+      <div class="form-group">
   
-        <div class="alert alert-danger print-error-msg" style="display:none">
+        <label>Video Title:</label>
   
-          <ul></ul>
+        <input type="text" name="name" class="form-control" required>
   
       </div>
   
   
       <div class="form-group">
   
-        <label>Alt Title:</label>
+        <label>Youtube Url:</label>
   
-        <input type="text" name="title" class="form-control" placeholder="Add Title">
-  
-      </div>
-  
-  
-      <div class="form-group">
-  
-        <label>Image:</label>
-  
-        <input type="file" name="image" id="image" class="form-control">
+        <input type="url" name="url" class="form-control" required>
   
       </div>
   
   
       <div class="form-group">
   
-        <button class="btn btn-success upload-image" type="submit">Upload Image</button>
+        <button class="btn btn-success upload-image" id="send_form" type="submit">Submit</button>
   
       </div>
   
   
     </form>
-
-</div>
-<h3> Add New Photos to Album </h3> 
-     <div class="row my-100">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="py-3 bg-primary text-white text-center"> Add New Images to Album </h3> 
+     <div class="row justify-content-center">
         
-        <div class="form-group">
-    <form id="file-upload-form" class="uploader" action="/update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <div class="form-group pt-5">
+    <form id="file-upload-form" class="uploader" action="{{route('admin.photos.store')}}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
         @csrf
         
-        <select class="itemName form-control" style="width:500px;" name="album"></select>
+        <select class="itemName form-control"  name="album"></select> <br> <br>
         <input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
         <span class="text-danger">{{ $errors->first('images') }}</span>
         <div id="thumb-output"></div>
         <br>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary float-right">Upload Photos</button>
         </form>
      </div>
     </div>
-  </div>  
-
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
        $('.itemName').select2({
 
@@ -114,70 +150,43 @@ ajax: {
 
 });
 
-$(document).ready(function (e) {
-     
-     $('#imageUploadForm').on('submit',(function(e) {
-      
-     $.ajaxSetup({
-      
-     headers: {
-      
-       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      
-     }
-      
-     });
-      
+$(document).ready(function(){
+  $('#send_form').click(function(e){
      e.preventDefault();
-      
-     var formData = new FormData(this);
-      
-      
-      
-     $.ajax({
-      
-        type:'POST',
-      
-        url: "{{ route('admin.album')}}",
-      
-        data:formData,
-      
-        cache:false,
-      
-        contentType: false,
-      
-        processData: false,
-      
-        success:function(data){
-         $("#imageUploadForm").trigger("reset");
-         window.alert(data.success);
-        },
-      
-        error: function(data){
-      
-         window.alert(data.errors);
-      
+     /*Ajax Request Header setup*/
+     $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-      
+    });
+  
+     $('#send_form').html('Sending..');
+     
+     /* Submit form data using ajax*/
+     $.ajax({
+        url: "{{ route('admin.video.store')}}",
+        method: 'post',
+        data: $('#VideoUploadForm').serialize(),
+        success: function(data){
+          
+              $('#send_form').html('Submit');
+              $("#myModal").modal("show");
+              $('#VideoUploadForm').trigger("reset");   
+            
+        },
+        error: function (xhr) {
+                  $('#err').html('');
+                  $.each(xhr.responseJSON.errors, function(key,value) {
+                    $('#err').append('<h5>'+value+'</h5>');
+                }); 
+                $('#send_form').html('Submit');
+                $("#myMod").modal("show");
+
+                },
+
+        });
      });
-      
-     }));
-      
-     });
+  });
     </script> 
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

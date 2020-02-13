@@ -4,12 +4,15 @@ namespace App\User;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wallet extends Model
+class Transaction extends Model
 {
     public function user(){
-        return $this->belongsTo('App\User','user_id');
+        return $this->belongsTo('App\User');
     }
+
     protected $fillable = [
-        'user_id','balance'
-    ];
+    'user_id',
+    'amount',
+    'type',
+    'note' ];
 }

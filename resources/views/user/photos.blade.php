@@ -1,145 +1,263 @@
 @extends('layouts.app')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
-.MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
-    .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
-        .MultiCarousel .MultiCarousel-inner .item { float: left;}
-        .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
-    .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
-    .MultiCarousel .leftLst { left:0; }
-    .MultiCarousel .rightLst { right:0; }
-    
-        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
+.btn:focus, .btn:active, button:focus, button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#image-gallery .modal-footer{
+  display: block;
+}
+
+.thumb{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 </style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @section('content')
-@include('user.head')
+
 
 <div class="container">
-	<div class="row">
-		<div class="MultiCarousel" data-items="1,2,3,4" data-slide="1" id="MultiCarousel"  data-interval="1000">
-            <div class="MultiCarousel-inner">
+    @include('user.head')
+    @if ($message = Session::get('success'))
+    
+    <div class="alert alert-success alert-block">
+ 
+        <button type="button" class="close" data-dismiss="alert">×</button>
+ 
+            <strong>{{ $message }}</strong>
+ 
+    </div>
+    <br>
+    @endif
+    @if (count($errors) > 0)
 
-                @foreach ($images as $image)
-                <div class="item">
-                    <div class="pad15">
-                    <img class="img-thumbnail" src="/public/images/{{$image->image}}" alt="image" style="width:100%; height:200px"/>
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">X</button>
+    
+            @foreach ($errors->all() as $error)
+
+                <p>{{ $error }}</p>
+
+            @endforeach
+
+    </div>
+
+   @endif
+    <div class="row d-flex justify-content-around">
+        <button type="button" class="btn btn-primary mt-10" data-toggle="modal" data-target="#album">
+            Update Profile Image
+          </button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photos">
+            add new
+          </button>
+            
+          <div class="modal fade" id="album" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">upload Profile Image</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="imageUploadForm" action="{{route('store.album')}}" enctype="multipart/form-data" method="POST">
+  
+                        @csrf
+                      
+                          <div class="form-group">
+                      
+                            <label>Album Title:</label>
+                      
+                            <input type="text" name="title" class="form-control" value="{{$user->album->name}}" required>
+                      
+                          </div>
+                      
+                      
+                          <div class="form-group">
+                      
+                            <label>Image:</label>
+                      
+                            <input type="file" name="image" id="image" class="form-control" required>
+                      
+                          </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button class="btn btn-success upload-image" type="submit"> Upload Image</button>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="photos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Upload images</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form id="imageUploadForm" action="{{route('store.photos')}}" enctype="multipart/form-data" method="POST">
+
+                        @csrf
+                      
+                          <div class="form-group">
+                      
+                            <label>Upload multiple Images:</label>
+                      
+                            <input required type="file" class="form-control" name="images[]" placeholder="images" multiple>
+                      
+                          </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button class="btn btn-success upload-image" type="submit"> Upload Image</button>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+        </div>
+
+	<div class="row">
+		<div class="row">
+            @foreach ($images as $image)
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                   data-image="/images/{{$image->image}}"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="/images/{{$image->image}}"
+                         alt="Another alt text">
+                </a>
+              <a href="{{route('profile.photos.delete',$image->id)}}"><button type="button" id="delete" class="btn btn-danger mx-1">Delete
+                </button></a>
+                
+            </div>
+            @endforeach
+            
+        </div>
+
+
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                        </button>
+                        
+                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
-                @endforeach
-
             </div>
-            <button class="btn btn-primary leftLst"><</button>
-            <button class="btn btn-primary rightLst">></button>
         </div>
 	</div>
-	
-</div>  
+</div>
+    
 @endsection
-<script type="text/javascript">
-$(document).ready(function () {
-    var itemsMainDiv = ('.MultiCarousel');
-    var itemsDiv = ('.MultiCarousel-inner');
-    var itemWidth = "";
+<script>
+let modalId = $('#image-gallery');
 
-    $('.leftLst, .rightLst').click(function () {
-        var condition = $(this).hasClass("leftLst");
-        if (condition)
-            click(0, this);
-        else
-            click(1, this)
-    });
+$(document)
+  .ready(function () {
 
-    ResCarouselSize();
+    loadGallery(true, 'a.thumbnail');
 
+    //This function disables buttons when needed
+    function disableButtons(counter_max, counter_current) {
+      $('#show-previous-image, #show-next-image')
+        .show();
+      if (counter_max === counter_current) {
+        $('#show-next-image')
+          .hide();
+      } else if (counter_current === 1) {
+        $('#show-previous-image')
+          .hide();
+      }
+    }
 
+    function loadGallery(setIDs, setClickAttr) {
+      let current_image,
+        selector,
+        counter = 0;
 
+      $('#show-next-image, #show-previous-image')
+        .click(function () {
+          if ($(this)
+            .attr('id') === 'show-previous-image') {
+            current_image--;
+          } else {
+            current_image++;
+          }
 
-    $(window).resize(function () {
-        ResCarouselSize();
-    });
+          selector = $('[data-image-id="' + current_image + '"]');
+          updateGallery(selector);
+        });
 
-    //this function define the size of the items
-    function ResCarouselSize() {
-        var incno = 0;
-        var dataItems = ("data-items");
-        var itemClass = ('.item');
-        var id = 0;
-        var btnParentSb = '';
-        var itemsSplit = '';
-        var sampwidth = $(itemsMainDiv).width();
-        var bodyWidth = $('body').width();
-        $(itemsDiv).each(function () {
-            id = id + 1;
-            var itemNumbers = $(this).find(itemClass).length;
-            btnParentSb = $(this).parent().attr(dataItems);
-            itemsSplit = btnParentSb.split(',');
-            $(this).parent().attr("id", "MultiCarousel" + id);
+      function updateGallery(selector) {
+        let $sel = selector;
+        current_image = $sel.data('image-id');
+        $('#image-gallery-title')
+          .text($sel.data('title'));
+        $('#image-gallery-image')
+          .attr('src', $sel.data('image'));
+        disableButtons(counter, $sel.data('image-id'));
+      }
 
-
-            if (bodyWidth >= 1200) {
-                incno = itemsSplit[3];
-                itemWidth = sampwidth / incno;
-            }
-            else if (bodyWidth >= 992) {
-                incno = itemsSplit[2];
-                itemWidth = sampwidth / incno;
-            }
-            else if (bodyWidth >= 768) {
-                incno = itemsSplit[1];
-                itemWidth = sampwidth / incno;
-            }
-            else {
-                incno = itemsSplit[0];
-                itemWidth = sampwidth / incno;
-            }
-            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
-            $(this).find(itemClass).each(function () {
-                $(this).outerWidth(itemWidth);
-            });
-
-            $(".leftLst").addClass("over");
-            $(".rightLst").removeClass("over");
-
+      if (setIDs == true) {
+        $('[data-image-id]')
+          .each(function () {
+            counter++;
+            $(this)
+              .attr('data-image-id', counter);
+          });
+      }
+      $(setClickAttr)
+        .on('click', function () {
+          updateGallery($(this));
         });
     }
+  });
 
-
-    //this function used to move the items
-    function ResCarousel(e, el, s) {
-        var leftBtn = ('.leftLst');
-        var rightBtn = ('.rightLst');
-        var translateXval = '';
-        var divStyle = $(el + ' ' + itemsDiv).css('transform');
-        var values = divStyle.match(/-?[\d\.]+/g);
-        var xds = Math.abs(values[4]);
-        if (e == 0) {
-            translateXval = parseInt(xds) - parseInt(itemWidth * s);
-            $(el + ' ' + rightBtn).removeClass("over");
-
-            if (translateXval <= itemWidth / 2) {
-                translateXval = 0;
-                $(el + ' ' + leftBtn).addClass("over");
-            }
+// build key actions
+$(document)
+  .keydown(function (e) {
+    switch (e.which) {
+      case 37: // left
+        if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+          $('#show-previous-image')
+            .click();
         }
-        else if (e == 1) {
-            var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
-            translateXval = parseInt(xds) + parseInt(itemWidth * s);
-            $(el + ' ' + leftBtn).removeClass("over");
+        break;
 
-            if (translateXval >= itemsCondition - itemWidth / 2) {
-                translateXval = itemsCondition;
-                $(el + ' ' + rightBtn).addClass("over");
-            }
+      case 39: // right
+        if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+          $('#show-next-image')
+            .click();
         }
-        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
-    }
+        break;
 
-    //It is used to get some elements from btn
-    function click(ell, ee) {
-        var Parent = "#" + $(ee).parent().attr("id");
-        var slide = $(Parent).attr("data-slide");
-        ResCarousel(ell, Parent, slide);
+      default:
+        return; // exit this handler for other keys
     }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+  });
 
-});
 </script>

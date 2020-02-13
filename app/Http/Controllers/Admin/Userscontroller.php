@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\User\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Userscontroller extends Controller
 {
@@ -15,7 +16,7 @@ class Userscontroller extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $users = User::with('profile','album','wallet')->get();
+        $users = User::latest()->get();
         return view('admin.users',['users' => $users]);
         
     }

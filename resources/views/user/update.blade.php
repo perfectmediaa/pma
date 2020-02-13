@@ -3,8 +3,12 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 @section('content')
 @include('user.head')
-<a href="/info"><button class="btn btn-primary pull-right float-right "> Back to Profile</button></a>
+
 <div class="container mt-5">
+  <div class="d-flex justify-content-end">
+    <a href="/info"><button class="btn btn-primary"> Back to Profile</button></a>
+
+  </div>
   
   <br>
     <div class="row">
@@ -16,12 +20,12 @@
                     @csrf
                     <div class="form-group">
                       <label for="formGroupExampleInput">Name</label>
-                      <input type="text" name="name" class="form-control" id="name" value="{{$id->name}}">
+                      <input type="text" name="name" class="form-control" id="name" value="{{$user->name}}">
                       <span class="text-danger">{{ $errors->first('name') }}</span>
                     </div>
                     <div class="form-group">
                       <label for="email">Email Id</label>
-                      <input type="text" name="email" class="form-control" id="email" value="{{$id->email}}">
+                      <input type="text" name="email" class="form-control" id="email" value="{{$user->email}}">
                       <span class="text-danger">{{ $errors->first('email') }}</span>
                     </div>      
                     <div class="form-group">
@@ -49,7 +53,7 @@
         
                         <label>Age:</label>
         
-                    <input type="text" name="age" id="age" class="form-control" value="{{$id->profile->age}}" >
+                    <input type="text" name="age" id="age" class="form-control" value="{{$user->profile->age}}" >
         
                     </div>
         
@@ -57,7 +61,7 @@
         
                         <label>Address:</label>
         
-                    <input type="text" name="address" id="address" class="form-control" value="{{$id->profile->address}}" >
+                    <input type="text" name="address" id="address" class="form-control" value="{{$user->profile->address}}" >
         
                     </div>
         
@@ -65,7 +69,7 @@
         
                         <strong>Experience:</strong>
         
-                    <input type="textarea" name="experience" id="experience" class="form-control" value="{{$id->profile->experience}}" >
+                    <input type="textarea" name="experience" id="experience" class="form-control" value="{{$user->profile->experience}}" >
         
                     </div>
         
@@ -75,37 +79,6 @@
         
                     </div>
         
-                </form>
-              </div>
-            </div>
-          </div>
-        
-          <div class="col-sm-6">
-            <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title bg-primary text-white">Album</h5>
-                  <form id="contact_us" method="post" action="javascript:void(0)">
-                    <div class="alert alert-success d-none" id="msg_div">
-                          <span id="res_message"></span>
-                     </div>
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Please enter name">
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email Id</label>
-                    <input type="text" name="email" class="form-control" id="email" placeholder="Please enter email id">
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                  </div>      
-                  <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" name="phone" class="form-control" id="phone" placeholder="Please enter mobile number" maxlength="10">
-                    <span class="text-danger">{{ $errors->first('phone') }}</span>
-                  </div>
-                  <div class="form-group">
-                   <button type="submit" id="send_form" class="btn btn-success">Submit</button>
-                  </div>
                 </form>
               </div>
             </div>

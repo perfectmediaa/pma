@@ -3,6 +3,9 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 @section('content')
 <div class="container mt-5">
+  @auth 
+  <h4 class="text-right">Wallet {{ $wallet->balance}} </h4>
+  @endauth
   <h1 class="text-center">Model Registration form </h1>
   <br>
   <div id="myModal" class="modal fade">
@@ -88,9 +91,15 @@
       </div>
       
     </div>
+    @auth
     <button class="btn btn-primary" type="submit" id="send_form">Submit form</button>
-  </form>
+    @endauth
     
+  </form>
+  @guest
+  <a href="/login"> <button class="btn btn-danger"> Login to submit form</button></a>
+  @endguest
+  
     
     
 </div>
@@ -122,7 +131,7 @@
         error: function (xhr) {
                   $('#err').html('');
                   $.each(xhr.responseJSON.errors, function(key,value) {
-                    $('#err').append('<li>'+value+'</li');
+                    $('#err').append('<h5>'+value+'</h5>');
                 }); 
                 $('#send_form').html('Submit');
                 $("#myMod").modal("show");
@@ -132,6 +141,6 @@
         });
      });
   });
-  //-----------------
+  
   </script>
 @endsection

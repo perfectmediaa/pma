@@ -20,16 +20,21 @@
 
 
 <div class="container">
-    <h1 class="text-center"> Bishal Kapoor</h1>
+  @isset($photo->user)
+      <h4 class="text-center text-white bg-primary py-2">{{$photo->user->name}}</h4>
+  @else
+  <h4 class="text-center text-white bg-primary py-2">{{$photo->name}}</h4>
+  @endisset
+
 	<div class="row">
 		<div class="row">
             @foreach ($images as $image)
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                   data-image="/public/images/{{$image->image}}"
+                   data-image="/images/{{$image->image}}"
                    data-target="#image-gallery">
                     <img class="img-thumbnail"
-                         src="/public/images/{{$image->image}}"
+                         src="/images/{{$image->image}}"
                          alt="Another alt text">
                 </a>
             </div>

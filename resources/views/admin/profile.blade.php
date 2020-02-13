@@ -115,9 +115,9 @@
                 <div class="form-group">
     
                     <label>Name:</label>
-    
+                    @isset($id->album->id)
                 <input type="text" name="name" id="name" class="form-control" value="{{$id->album->name}}" >
-    
+                 @endisset
                 </div>
     
                 <div class="form-group">
@@ -218,31 +218,32 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                        @if($id->transaction->isEmpty())
+            
+                            <tr>
+                                <td> </td>
+                                <td></td>
+                                <td> No record Found</td>
+                             </tr>
+                        @else
+                        @foreach ($id->transaction as $tran)
+                           <tr>
+                        <td>{{$tran->created_at}}</td>
+                        <td>{{$tran->amount}}</td>
+                        <td>{{$tran->type}}</td>
+                        <td>{{$tran->note}}</td>
+                        <td><button class="btn btn-success">ok </button></td>
+                          </tr> 
+                        @endforeach
+                        @endif
                     </tbody>
                   </table>
               </div>
@@ -252,73 +253,80 @@
 
 
 <script>
-    if ($("#account").length > 0) {
-     $("#account").validate({
-       
-    
-          submitHandler: function(form) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#send_account').html('Sending..');
-            $.ajax({
-              url: '{{route('admin.profileedit',$id->id)}}' ,
-              type: "POST",
-              data: $('#account').serialize(),
-              success: function( response ) {
-                  $('#send_account').html('Submit');
-                  $("#myModal").modal("show");
-        
-              },
-              error: function (xhr) {
+  
+ $(document).ready(function(){
+  $('#send_account').click(function(e){
+     e.preventDefault();
+     /*Ajax Request Header setup*/
+     $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  
+     $('#send_account').html('Sending..');
+     
+     /* Submit form data using ajax*/
+     $.ajax({
+        url: "{{route('admin.accountedit',$id->id)}}",
+        method: 'post',
+        data: $('#account').serialize(),
+        success: function(data){
+          
+              $('#send_account').html('Submit');
+              $("#myModal").modal("show");   
+            
+        },
+        error: function (xhr) {
                   $('#err').html('');
                   $.each(xhr.responseJSON.errors, function(key,value) {
-                    $('#err').append('<li>'+value+'</li');
+                    $('#err').append('<h5>'+value+'</h5>');
                 }); 
                 $('#send_account').html('Submit');
                 $("#myMod").modal("show");
 
                 },
-            });
-          }
-   })
- }
 
- if ($("#profile").length > 0) {
-     $("#profile").validate({
-    
-          submitHandler: function(form) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('#send_profile').html('Sending..');
-            $.ajax({
-              url: '{{route('admin.profileedit',$id->id)}}' ,
-              type: "POST",
-              data: $('#profile').serialize(),
-              success: function( response ) {
-                  $('#send_profile').html('Submit');
-                  $("#myModal").modal("show");
-        
-              },
-              error: function (xhr) {
+        });
+     });
+  });
+  
+  $(document).ready(function(){
+  $('#send_profile').click(function(e){
+     e.preventDefault();
+     /*Ajax Request Header setup*/
+     $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  
+     $('#send_profile').html('Sending..');
+     
+     /* Submit form data using ajax*/
+     $.ajax({
+        url: "{{route('admin.profileedit',$id->id)}}",
+        method: 'post',
+        data: $('#profile').serialize(),
+        success: function(data){
+          
+              $('#send_profile').html('Submit');
+              $("#myModal").modal("show");   
+            
+        },
+        error: function (xhr) {
                   $('#err').html('');
                   $.each(xhr.responseJSON.errors, function(key,value) {
-                    $('#err').append('<li>'+value+'</li');
+                    $('#err').append('<h5>'+value+'</h5>');
                 }); 
                 $('#send_profile').html('Submit');
                 $("#myMod").modal("show");
 
                 },
-            });
-          }
-   })
- }
 
+        });
+     });
+  });
  
 
  </script>

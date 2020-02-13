@@ -31,10 +31,18 @@
               </div>
           </div>
       </div>
+  </div>   
+
+  <div class="row justify-content-end">
+  <a href="{{route('admin.all.albums')}}"> <button class="btn btn-success mx-3">All Images</button></a>
   </div>
-    <h3> Add New Album </h3>
-    <div class="row pt-20">
-    <form id="imageUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="py-3 bg-success text-white text-center"> Add New Album </h4>
+      <form id="imageUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
   
   
         <div class="alert alert-danger print-error-msg" style="display:none">
@@ -46,9 +54,9 @@
   
       <div class="form-group">
   
-        <label>Alt Title:</label>
+        <label>Album Title:</label>
   
-        <input type="text" name="title" class="form-control" placeholder="Add Title">
+        <input type="text" name="title" class="form-control" placeholder="Add Title" required>
   
       </div>
   
@@ -57,7 +65,7 @@
   
         <label>Image:</label>
   
-        <input type="file" name="image" id="image" class="form-control">
+        <input type="file" name="image" id="image" class="form-control" required>
   
       </div>
   
@@ -70,26 +78,33 @@
   
   
     </form>
-
-</div>
-<h3> Add New Photos to Album </h3> 
-     <div class="row my-100">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="py-3 bg-primary text-white text-center"> Add New Images to Album </h3> 
+     <div class="row justify-content-center">
         
-        <div class="form-group">
-    <form id="file-upload-form" class="uploader" action="/update" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <div class="form-group pt-5">
+    <form id="file-upload-form" class="uploader" action="{{route('admin.photos.store')}}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
         @csrf
         
-        <select class="itemName form-control" style="width:500px;" name="album"></select> <br> <br>
+        <select class="itemName form-control"  name="album"></select> <br> <br>
         <input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
         <span class="text-danger">{{ $errors->first('images') }}</span>
         <div id="thumb-output"></div>
         <br>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary float-right">Upload Photos</button>
         </form>
      </div>
     </div>
-  </div>  
-
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
        $('.itemName').select2({
 

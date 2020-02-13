@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 <div class="container">
+  @php
+   $i =1;   
+  @endphp
     <table class="table">
         <thead>
           <tr>
@@ -14,7 +17,7 @@
         <tbody>
           @foreach ($users as $user)
           <tr>
-            <th scope="row">1</th>
+          <th scope="row">{{$i++}}</th>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
           <td><a href="{{route('admin.profile', $user->id)}}"><button class="btn btn-danger">view</button></a></td>

@@ -44,10 +44,13 @@ class User extends Authenticatable
         return $this->hasOne('App\album');
     }
     public function wallet(){
-        return $this->hasOne('App\User\Wallet');
+       return $this->hasOne('App\User\Wallet');
     }
     public function modelform(){
         return $this->hasOne('App\Modelform');
+    }
+    public function transaction(){
+         return $this->hasMany('App\User\Transaction');
     }
 
     protected static function boot(){
@@ -58,6 +61,10 @@ class User extends Authenticatable
             ]);
             $user->wallet()->create([
                 'user_id' => $user->id,
+            ]);
+            $user->album()->create([
+                'user_id' => $user->id,
+                'name' => $user->name,
             ]);
         });
     }
