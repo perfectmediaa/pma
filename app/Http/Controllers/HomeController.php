@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\News;
 use App\Album;
 use App\Image;
 use App\User;
@@ -18,10 +19,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('profile', 'info','store','update','photos');
-    }
 
     /**
      * Show the application dashboard.
@@ -50,5 +47,16 @@ class HomeController extends Controller
         return view('video', compact('video'));
     }
 
-    
+    public function single_news($slug){
+        $news = News::where("slug", $slug)->first();
+        $recent = News::latest()->take(5)->get();
+    	if(!$news){
+            abort('404');
+        }
+        return view('single_news',compact('news','recent'));
+    }
+    public function all_news(){
+        $news = News::latest()->paginate(8);
+        return view('all_news',compact('news'));
+    }
 }

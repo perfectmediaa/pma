@@ -190,7 +190,7 @@ class UserController extends Controller
             }
     
     
-        return back()->with('success', 'Data Your files has been successfully added');
+        return back()->with('success', 'Your files has been successfully added');
     }
 
     public function photos(){

@@ -22,6 +22,8 @@ Route::get('/photos/{photo}', 'HomeController@photos')->name('photos');
 Route::get('/video/{video}', 'HomeController@video')->name('get.video');
 Route::get('/form', 'User\UserController@modelform')->name('modalform');
 Route::post('/form', 'User\UserController@formStore')->name('formStore');
+Route::get('/news', 'HomeController@all_news')->name('all.news');
+Route::get('/news/{slug}', 'HomeController@single_news')->name('single.news');
 
 
 Route::get('/wallet', 'User\UserController@get_wallet')->name('get.wallet');
@@ -56,7 +58,8 @@ Route::prefix('admin')->group(function(){
     Route::post('/album-edit/{album}', 'Admin\PhotosController@album_update')->name('admin.album.update');
     Route::post('/video/update/{video}', 'Admin\PhotosController@video_update')->name('admin.video.update');
     Route::get('/video/delete/{video}', 'Admin\PhotosController@video_delete')->name('admin.video.delete');
-
-
+    Route::get('/news/create', 'Admin\NewsController@create')->name('admin.news.create');
+    Route::post('/news/create', 'Admin\NewsController@store')->name('admin.news.store');
+   
 
 });
