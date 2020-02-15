@@ -3,7 +3,6 @@
 @section('content')
 @include('user.head')
 <div class="container mt-5">
-   <a href="/update" <button class="btn btn-primary pull-right float-right "> Update Profile</button> </a>
     <h4>Personal Information</h4>
     <div class="row">
         <div class="col-md-12">
@@ -54,6 +53,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row my-5 justify-content-end">
+        <a href="/profile/update"> <button class="btn btn-primary"> Update Profile</button> </a>
     </div>
 </div>
 @endsection

@@ -13,10 +13,10 @@
 
 /* FontAwesome for working BootSnippet :> */
 
-#team {
-    background: #eee !important;
+#team p{
+        color: black;
+       
 }
-
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: #108d6f;

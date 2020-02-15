@@ -57,6 +57,21 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('models.get') }}">{{ __('models') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('videos.get') }}">{{ __('videos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('all.news') }}">{{ __('news') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('get.wallet') }}">{{ __('wallet') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('modalform') }}">{{ __('form') }}</a>
+                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -65,12 +80,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('darta') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('index') }}</a>
-                                </li>
+                                
                             @endif
                         @else
                             <li class="nav-item dropdown">
@@ -90,6 +100,7 @@
                                     </form>
                                 </div>
                             </li>
+        
                         @endguest
                     </ul>
                 </div>
@@ -103,7 +114,7 @@
 </body>
 
 <footer id="dk-footer" class="dk-footer">
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 col-lg-4">
                 <div class="dk-footer-box-info">

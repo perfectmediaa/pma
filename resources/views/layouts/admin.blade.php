@@ -139,7 +139,7 @@ body {
                 <a href="/admin/photos" class="list-group-item list-group-item-action bg-light">Add Photos</a>
                 <a href="/admin/videos" class="list-group-item list-group-item-action bg-light">Add Videos</a>
                 <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                <a href="/admin/news" class="list-group-item list-group-item-action bg-light">News</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
               </div>
             </div>

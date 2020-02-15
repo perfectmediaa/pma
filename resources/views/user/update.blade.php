@@ -4,11 +4,7 @@
 @section('content')
 @include('user.head')
 
-<div class="container mt-5">
-  <div class="d-flex justify-content-end">
-    <a href="/info"><button class="btn btn-primary"> Back to Profile</button></a>
-
-  </div>
+<div class="container my-3 text-dark">
   
   <br>
     <div class="row">
@@ -37,7 +33,7 @@
                             <span id="res_message"></span>
                     </div>
                     <div class="form-group">
-                     <button type="submit" id="send_account" class="btn btn-success">Submit</button>
+                     <button type="submit" id="send_account" class="btn btn-success float-right btn-sm">Save</button>
                     </div>
                   </form>
             </div>
@@ -75,7 +71,7 @@
         
                     <div class="form-group">
         
-                      <button type="submit" id="send_profile" class="btn btn-success">Submit</button>
+                      <button type="submit" id="send_profile" class="btn btn-success float-right btn-sm">Save</button>
         
                     </div>
         

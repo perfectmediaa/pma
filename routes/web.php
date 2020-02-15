@@ -11,19 +11,25 @@
 |
 */
 
-Route::get('/', 'HomeController@profile')->name('profile');
+Route::get('/', 'HomeController@index')->name('index');
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/info', 'HomeController@info')->name('info');
+Route::get('/info/{user}', 'HomeController@info')->name('info');
 Route::get('/photos/{photo}', 'HomeController@photos')->name('photos');
 Route::get('/video/{video}', 'HomeController@video')->name('get.video');
 Route::get('/form', 'User\UserController@modelform')->name('modalform');
 Route::post('/form', 'User\UserController@formStore')->name('formStore');
 Route::get('/news', 'HomeController@all_news')->name('all.news');
 Route::get('/news/{slug}', 'HomeController@single_news')->name('single.news');
+Route::get('/models', 'HomeController@models')->name('models.get');
+Route::get('/videos', 'HomeController@videos')->name('videos.get');
+
+
+
+
+
 
 
 Route::get('/wallet', 'User\UserController@get_wallet')->name('get.wallet');
@@ -60,6 +66,13 @@ Route::prefix('admin')->group(function(){
     Route::get('/video/delete/{video}', 'Admin\PhotosController@video_delete')->name('admin.video.delete');
     Route::get('/news/create', 'Admin\NewsController@create')->name('admin.news.create');
     Route::post('/news/create', 'Admin\NewsController@store')->name('admin.news.store');
+    Route::get('/news/update/{news}', 'Admin\NewsController@update')->name('admin.news.update.get');
+    Route::post('/news/update/{news}', 'Admin\NewsController@update_news')->name('admin.news.update');
+    Route::get('/news', 'Admin\NewsController@index')->name('admin.news');
+    Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');
+
+
+
    
 
 });

@@ -11,7 +11,7 @@
 @section('content')
 <div class="container">
     <div class="d-flex col-sm-9 justify-content-center">
-        <h4>Create New News</h4>
+        <h4>Update News</h4>
     </div>
     @if ($message = Session::get('success'))
     
@@ -38,25 +38,26 @@
     </div>
    @endif
     <div class="col-12 my-3">
-    <form action="{{route('admin.news.store')}}" enctype="multipart/form-data" method="POST">
+        
+    <form action="{{route('admin.news.update',$news->id)}}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="form-group">
                 <label for="" class="col-sm-3 control-label">News Title</label>
                 <div class="col-sm-9">
-                    <input type="text" name="title" class="form-control" required>
+                <input type="text" name="title" class="form-control" value="{{$news->title}}" required>
                 </div>
             </div>
             
             <div class="form-group">
                 <label for="" class="col-sm-3 control-label">Description</label>
                 <div class="col-sm-9">
-                    <textarea name="description" id="description" cols="30" rows="10" class="summernote" required></textarea>
+                    <textarea name="description" id="description" cols="30" rows="10" class="summernote" required>{{$news->description}}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-sm-3 control-label">Tags</label>
                 <div class="col-sm-9">
-                    <input type="text" name="tags" class="form-control">
+                <input type="text" name="tags" class="form-control" value="{{$news->tags}}">
                 </div>
             </div>
             <div class="form-group">
@@ -66,7 +67,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="" class="col-sm-3 control-label">Visible</label>
+                <div class="d-Flex">
+                    <label for="" class="col-sm-3 control-label">Visible</label>
+                    <p class="text-center text-success"> Your Post is 
+                        @if($news->status==1) Public
+                        @else Private
+                        @endif
+                    </p>
+                </div>
+                
                 <div class="col-sm-9">
                     <select class="form-control" name="status">
                         <option value="1">Public</option>
@@ -76,7 +85,7 @@
             </div>
             <div class="form-group">
                 <div class="d-flex col-sm-9 justify-content-end">
-                 <button class="btn btn-success" type="submit">Submit</button>
+                 <button class="btn btn-success" type="submit">Update News</button>
                 </div>
               </div>
               
@@ -86,7 +95,6 @@
 </div>
 <script>
     $('.summernote').summernote({
-      placeholder: 'write news here',
       tabsize: 2,
       height: 100
     });

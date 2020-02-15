@@ -2,9 +2,9 @@
 <link href="{{ asset('css/all.css') }}" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5 text-dark">
   @auth 
-  <h4 class="text-right">Wallet {{ $wallet->balance}} </h4>
+  <h4 class="text-right text-success mx-2">wallet {{ $wallet->balance}} </h4>
   @endauth
   <h1 class="text-center">Model Registration form </h1>
   <br>

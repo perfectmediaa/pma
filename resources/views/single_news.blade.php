@@ -20,7 +20,7 @@
 		                    <div class="row">
 		                        <div class="col-md-12">
 		                            <div class="news-title">
-		                                <h2>Highlights from the Louis Vuitton Men’s Spring</h2>
+									<h2>{{$news->title}}</h2>
 		                            </div>
 		                            <div class="news-cats">
 		                                <ul class="list-unstyled list-inline mb-1">

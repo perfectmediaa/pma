@@ -6,6 +6,7 @@
     .model-are{
         background-color: #052a6a;
     }
+   
 </style>
 @section('content')
      <div class="container-fluid px-0">
@@ -48,7 +49,7 @@
                         <div class="pad15">
     
                          
-                        <a  href="/video/{{$video->id}}">
+                        <a  href="{{route('get.video',$video->id)}}">
                                 <img src="https://img.youtube.com/vi/{{$video->video}}/0.jpg" alt="videos" style="width:100%; height:250px">
                               
                             </a>
@@ -63,12 +64,26 @@
             </div>
        </div>
 
-
+<!-- News Section -->
+<h3 class="text-white model-are py-2"> Recent News</h3>
+<div class="row">
+    @foreach ($news as $item)
+    <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+          <h5 class="card-title text-primary">{{$item->title}}</h5>
+          <p class="card-text text-dark">{!! substr($item->description,0,109) !!}....</p>
+          <a href="{{route('single.news',$item->slug)}}"> <button type="button" class="btn btn-outline-danger btn-sm float-right">Read More</button> </a>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
 
 <!-- Team -->
+<h3 class="text-white model-are py-2 my-3"> Our Team</h3>
 <section id="team" class="pb-5">
     <div class="container">
-        <h5 class="section-title h1">OUR TEAM</h5>
         <div class="row">
             <!-- Team member -->
             <div class="col-xs-12 col-sm-6 col-md-4">
@@ -86,7 +101,7 @@
                         </div>
                         <div class="backside">
                             <div class="card">
-                                <div class="card-body text-center mt-4">
+                                <div class="card-body text-center mt-1">
                                     <h4 class="card-title">Sunlimetech</h4>
                                     <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
                                     <ul class="list-inline">

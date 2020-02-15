@@ -27,15 +27,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $albums = Album::latest()->get();
+        $videos = Video::latest()->get();
+        $news = News::latest('id')->where('status',1)->take(3)->get();
+        return view('index', compact('albums','videos','news'));
     }
     public function profile(){
         $albums = Album::latest()->get();
         $videos = Video::latest()->get();
-        return view('index', compact('albums','videos'));
+        $news = News::latest('id')->where('status',1)->take(3)->get();
+        return view('index', compact('albums','videos','news'));
     }
-    public function info(){
-        return view('user.info');
+    public function info(User $user){
+        return view('profile',compact('user'));
     }
     
 
@@ -48,15 +52,50 @@ class HomeController extends Controller
     }
 
     public function single_news($slug){
-        $news = News::where("slug", $slug)->first();
-        $recent = News::latest()->take(5)->get();
+        $news = News::where("slug", $slug)->where('status',1)->first();
+        $recent = News::latest('id')->where('status',1)->take(5)->get();
     	if(!$news){
             abort('404');
         }
         return view('single_news',compact('news','recent'));
     }
     public function all_news(){
-        $news = News::latest()->paginate(8);
+        $news = News::latest('id')->where('status',1)->paginate(8);
         return view('all_news',compact('news'));
     }
+    public function models(Request $request)
+    {   
+        $this->validate($request,[
+            'search' => 'max:30',
+        ]);
+        $search =  $request->input('search');
+        if($search!=""){
+            $albums = Album::where('name','LIKE',"%$request->search%")->paginate(12);
+            
+            $albums->appends(['search' => $search]);
+            return view('all_models',compact('albums'));
+        }else{
+            $albums = Album::latest('id')->paginate(8);
+            return view('all_models',compact('albums'));
+        }
+        
+    }
+    public function videos(Request $request)
+    {  
+        $this->validate($request,[
+            'search' => 'max:30',
+        ]);
+        $search =  $request->search;
+        if($search!=""){
+            $videos = Video::where('name','LIKE',"%$search%")->paginate(12);
+            $videos->appends(['search' => $search]);
+            return view('all_videos',compact('videos'));
+        }
+        else{
+            $videos = Video::latest('id')->paginate(8);
+            return view('all_videos',compact('videos'));
+        }
+        
+    }
+
 }

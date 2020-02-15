@@ -12,6 +12,7 @@
 .thumb{
   margin-top: 15px;
   margin-bottom: 15px;
+
 }
 </style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -46,15 +47,15 @@
     </div>
 
    @endif
-    <div class="row d-flex justify-content-around">
-        <button type="button" class="btn btn-primary mt-10" data-toggle="modal" data-target="#album">
-            Update Profile Image
+    <div class="row d-flex justify-content-end">
+        <button type="button" class="btn btn-danger mx-2 btn-sm" data-toggle="modal" data-target="#album">
+            Profile Image
           </button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photos">
-            add new
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#photos">
+            New Images
           </button>
             
-          <div class="modal fade" id="album" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal fade text-dark" id="album" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -94,7 +95,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="photos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal fade text-dark" id="photos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -129,7 +130,7 @@
 
 	<div class="row">
 		<div class="row">
-            @foreach ($images as $image)
+            @forelse ($images as $image)
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
                    data-image="/images/{{$image->image}}"
@@ -138,16 +139,20 @@
                          src="/images/{{$image->image}}"
                          alt="Another alt text">
                 </a>
-              <a href="{{route('profile.photos.delete',$image->id)}}"><button type="button" id="delete" class="btn btn-danger mx-1">Delete
+              <a href="{{route('profile.photos.delete',$image->id)}}"><button type="button" id="delete" class="btn btn-outline-danger btn-sm mx-1">Delete
                 </button></a>
                 
             </div>
-            @endforeach
+            @empty
+            <div class=" alert alert-warning my-5 mx-3 px-3">
+              <h5><strong class="text-center">Sorry!</strong> No Images in this album.</h5> 
+           </div>
+            @endforelse
             
         </div>
 
 
-        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

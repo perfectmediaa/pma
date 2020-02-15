@@ -3,7 +3,7 @@
 
 <script src="https://khalti.com/static/khalti-checkout.js"></script>
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5 text-dark">
     <div id="khalti"><button type="button" class="btn btn-primary btn float-right" id="kbtn" data-toggle="modal" data-target="#khalti-modal">Add Balance</button></div>
   <h4 class="text-center">Wallet {{ $wallet->balance}} </h4>
   <br>

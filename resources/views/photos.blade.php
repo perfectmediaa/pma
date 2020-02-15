@@ -21,14 +21,24 @@
 
 <div class="container">
   @isset($photo->user)
-      <h4 class="text-center text-white bg-primary py-2">{{$photo->user->name}}</h4>
+      <div class="d-flex justify-content-around bg-primary">
+        <h4 class="text-center text-white py-2">{{$photo->user->name}}</h4>
+      <a href="{{route('info',$photo->user_id)}}">
+          <button class="btn btn-success"> View Profile</button>
+        </a>
+        
+        
+      </div>
+      
   @else
-  <h4 class="text-center text-white bg-primary py-2">{{$photo->name}}</h4>
+  <div class="d-flex justify-content-center bg-primary">
+  <h4 class="text-center text-white  py-2">{{$photo->name}}</h4>
+  </div>
   @endisset
 
 	<div class="row">
-		<div class="row">
-            @foreach ($images as $image)
+		<div class="row my-5">
+            @forelse ($images as $image)
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
                    data-image="/images/{{$image->image}}"
@@ -38,7 +48,11 @@
                          alt="Another alt text">
                 </a>
             </div>
-            @endforeach
+            @empty
+            <div class="alert alert-warning my-5">
+               <h5><strong class="text-center">Sorry!</strong> No Images in this album.</h5> 
+            </div>   
+            @endforelse
             
         </div>
 
