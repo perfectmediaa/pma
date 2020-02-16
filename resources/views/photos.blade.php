@@ -12,6 +12,17 @@
 .thumb{
   margin-top: 15px;
   margin-bottom: 15px;
+  height: 300px; 
+
+}
+.thumb img{
+  object-fit: scale-down;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -19,7 +30,7 @@
 @section('content')
 
 
-<div class="container">
+<div class="container mb-5">
   @isset($photo->user)
       <div class="d-flex justify-content-around bg-primary">
         <h4 class="text-center text-white py-2">{{$photo->user->name}}</h4>

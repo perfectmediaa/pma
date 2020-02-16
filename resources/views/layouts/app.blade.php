@@ -58,19 +58,28 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('models.get') }}">{{ __('models') }}</a>
+                            <a class="nav-link" href="{{ route('models.get') }}">{{ __('Models') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('videos.get') }}">{{ __('videos') }}</a>
+                            <a class="nav-link" href="{{ route('albums.get') }}">{{ __('Photos') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('all.news') }}">{{ __('news') }}</a>
+                            <a class="nav-link" href="{{ route('videos.get') }}">{{ __('Videos') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('get.wallet') }}">{{ __('wallet') }}</a>
+                            <a class="nav-link" href="{{ route('all.news') }}">{{ __('News') }}</a>
+                        </li>
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile') }}">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('modalform') }}">{{ __('form') }}</a>
+                            <a class="nav-link" href="{{ route('get.wallet') }}">{{ __('Wallet') }}</a>
+                        </li>
+                        @endauth
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('modalform') }}">{{ __('Form') }}</a>
                         </li>
                         @guest
                             <li class="nav-item">

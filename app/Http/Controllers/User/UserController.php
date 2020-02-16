@@ -20,7 +20,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('modelform');
     }
     
     public function modelform(){
@@ -175,22 +175,27 @@ class UserController extends Controller
         $this->validate($request, [
             'images' => 'required',
             ]);
-            $album = Album::where('user_id',Auth::id())->value('id');
-            if ($files = $request->file('images')){
-                foreach ($files as $file){
-                    $gallery = new Image;
-                    $image_name = str::random(5).time().$file->getClientOriginalName();
-                    $img = Ima::make($file)
-                    ->encode('jpg', 75)
-                    ->save(public_path('images/'.$image_name));
-                    $gallery['image'] = $image_name;
-                    $gallery['album_id'] = $album;
-                    $gallery->save();
-                }
+        
+            if(Auth::user()->paid){
+                $album = Album::where('user_id',Auth::id())->value('id');
+                if ($files = $request->file('images')){
+                    foreach ($files as $file){
+                        $gallery = new Image;
+                        $image_name = str::random(5).time().$file->getClientOriginalName();
+                        $img = Ima::make($file)->resize(1200, 675,
+                           )
+                        ->save(public_path('images/'.$image_name));
+                        $gallery['image'] = $image_name;
+                        $gallery['album_id'] = $album;
+                        $gallery->save();
+                    }
+                 }
+                 return back()->with('success', 'Your files has been successfully added');
+            }else{
+                return back()->with('success', 'Please Upgrade Your Account to add Images');
             }
     
-    
-        return back()->with('success', 'Your files has been successfully added');
+        
     }
 
     public function photos(){
@@ -209,11 +214,12 @@ class UserController extends Controller
     $album = Album::where('user_id',Auth::id())->first();
     $this->authorize('update', $album);
     if($file = $request->file('image')){
-            $fileNameToStored = str::random(4).time().'.'.$file->getClientOriginalName();;
+            $fileNameToStored = str::random(4).time().$file->getClientOriginalName();;
             //resize the images
             $img = Ima::make($file)
-                ->resize(1000,1000)
-                ->save(public_path('albums/'.$fileNameToStored));
+            ->resize(1080, 1080, function($constraint) {
+                $constraint->aspectRatio();
+               })->save(public_path('albums/'.$fileNameToStored));
                 $oldImage = public_path("albums/{$album->cover_image}");
                 if (is_file($oldImage)) { // unlink or remove previous image from folder
                     unlink($oldImage);
@@ -221,7 +227,7 @@ class UserController extends Controller
                 $album->name = $request->title;
                 $album->cover_image = $fileNameToStored;
                 $album->save();
-                return back()->with('success', 'Data Your image has been successfully added');
+                return back()->with('success', 'Your image has been successfully added');
         }
     }
     public function deleteImg(Image $id){
@@ -234,10 +240,13 @@ class UserController extends Controller
                 }
         $id->delete();
         
-        return back()->with('success', 'Data Your image has been successfully added');
+        return back()->with('success', 'Your image has been successfully Removed');
         
         
     }
-
+    public function upgrade(){
+        $user = Auth::user();
+        return view('user.upgrade',compact('user'));
+    }
 
 }

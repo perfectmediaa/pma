@@ -70,13 +70,29 @@ class HomeController extends Controller
         ]);
         $search =  $request->input('search');
         if($search!=""){
+            $users = User::with('album')->where('name','LIKE',"%$request->search%")->paginate(12);
+            $users->appends(['search' => $search]);
+            return view('all_models',compact('users'));
+        }else{
+            $users = User::with('album')->latest('id')->paginate(8);
+            return view('all_models',compact('users'));
+        }
+        
+    }
+    public function albums(Request $request)
+    {   
+        $this->validate($request,[
+            'search' => 'max:30',
+        ]);
+        $search =  $request->input('search');
+        if($search!=""){
             $albums = Album::where('name','LIKE',"%$request->search%")->paginate(12);
             
             $albums->appends(['search' => $search]);
-            return view('all_models',compact('albums'));
+            return view('all_albums',compact('albums'));
         }else{
             $albums = Album::latest('id')->paginate(8);
-            return view('all_models',compact('albums'));
+            return view('all_albums',compact('albums'));
         }
         
     }

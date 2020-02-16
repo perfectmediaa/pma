@@ -3,7 +3,7 @@
 <div class="container text-dark">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="http://www.trendycovers.com/covers/1322932923.jpg" />
-    <img align="left" class="fb-image-profile thumbnail" src="/albums/Jzu81581515832.IMG_0289.jpg"/>
+    <img align="left" class="fb-image-profile thumbnail" src="/albums/{{empty($user->album->cover_image)? 'default.jpg' : $user->album->cover_image }}"/>
         <div class="fb-profile-text">
         <h1>{{$user->name}}</h1>
             <p>Hey I am Using Perfect Media .</p>

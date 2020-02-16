@@ -2,7 +2,7 @@
 <link href="{{ asset('css/all.css') }}" rel="stylesheet">
 @section('content')
 <div class="container mt-5">
-    <h4>Models</h4>
+    <h4>Photos</h4>
     <div class="row justify-content-center my-3">
         <div class="col-12 col-md-10 col-lg-8">
             <form class="card card-sm" action="">
@@ -13,7 +13,7 @@
                     </div>
                     <!--end of col-->
                     <div class="col">
-                        <input class="form-control form-control-lg form-control-borderless" name="search" type="text" placeholder="Get Models on your location" required>
+                        <input class="form-control form-control-lg form-control-borderless" name="search" type="text" placeholder="Search for the images" required>
                     </div>
                     <!--end of col-->
                     <div class="col-auto">
@@ -26,27 +26,27 @@
         <!--end of col-->
 </div>
     <div class="row">
-        @forelse ($users as $user)
+        @forelse ($albums as $album)
         <div class="col-lg-3 col-md-4 col-xs-4">
-            <a href="{{route('info',$user->id)}}">
+            <a href="{{route('photos',$album->id)}}">
                 <img class="img-thumbnail w-100 img-responsive"
-                     src="/albums/{{empty($user->album->cover_image)? 'default.jpg' : $user->album->cover_image }}"
+                     src="/albums/{{empty($album->cover_image)? 'default.jpg' : $album->cover_image }}"
                      alt="album" style="width:100%; height:350px">
             
-            <p class="px-1">{{$user->name}}</p>
+            <p class="px-1">{{$album->name}}</p>
             </a>
         </div>
         @empty
         
         <div class="alert alert-warning my-5">
-            <h5><strong class="text-center">Sorry!</strong> No Model found</h5> 
+            <h5><strong class="text-center">Sorry!</strong> No Image found</h5> 
          </div>
             
         @endforelse
         
     </div>
     <div class="d-flex row mb-2 justify-content-end">
-        {{ $users->render() }}
+        {{ $albums->render() }}
     </div>
 </div>
 @endsection

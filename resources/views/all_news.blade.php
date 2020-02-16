@@ -27,17 +27,13 @@
 		                            </div>
 		                            <div class="news-cats">
 		                                <ul class="list-unstyled list-inline mb-1">
-		                                    <li class="list-inline-item">
-		                                            <i class="fa fa-home text-danger"></i>
-    		                                        <small>Perfect Media</small> 
-		                                    </li>
 		                                     <li class="list-inline-item">
 		                                            <i class="fa fa-compass text-danger"></i>
                                                     <small>News</small> 
                                                     
 		                                    </li>
 		                                     <li class="list-inline-item">
-		                                            <i class="fa fa-folder-o text-danger"></i>
+		                                            <i class="fa fa-check-circle text-danger"></i>
                                              <small>{{$item->created_at->format('d-m-Y')}}</small>
 		                                    </li>
 		                                  

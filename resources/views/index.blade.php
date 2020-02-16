@@ -11,10 +11,10 @@
 @section('content')
      <div class="container-fluid px-0">
           
-            <img src="https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1439,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1492190323/articles/2014/12/12/is-9-year-old-russian-model-kristina-pimenova-too-sexualized/141210-nemtsova-child-model-tease_omlgvk" alt="test" class="img-responsive" style="width:100%;">
+            <img src="https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1439,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1492190323/articles/2014/12/12/is-9-year-old-russian-model-kristina-pimenova-too-sexualized/141210-nemtsova-child-model-tease_omlgvk" alt="home image" class="img-responsive" style="width:100%;">
             
 </div>
-<div class="container text-center py-0">
+<div class="container text-center py-0 text-dark">
     <div class="model-are justify-content-center text-white">
         <h3 class=" text-white py-3">Model are not born They are Made</h3>
     </div>
@@ -71,7 +71,7 @@
     <div class="col-sm-4">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title text-primary">{{$item->title}}</h5>
+            <a href="{{route('single.news',$item->slug)}}"> <h5 class="card-title text-primary">{{$item->title}}</h5> </a>
           <p class="card-text text-dark">{!! substr($item->description,0,109) !!}....</p>
           <a href="{{route('single.news',$item->slug)}}"> <button type="button" class="btn btn-outline-danger btn-sm float-right">Read More</button> </a>
           </div>

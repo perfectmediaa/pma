@@ -24,13 +24,8 @@ Route::post('/form', 'User\UserController@formStore')->name('formStore');
 Route::get('/news', 'HomeController@all_news')->name('all.news');
 Route::get('/news/{slug}', 'HomeController@single_news')->name('single.news');
 Route::get('/models', 'HomeController@models')->name('models.get');
+Route::get('/photos', 'HomeController@albums')->name('albums.get');
 Route::get('/videos', 'HomeController@videos')->name('videos.get');
-
-
-
-
-
-
 
 Route::get('/wallet', 'User\UserController@get_wallet')->name('get.wallet');
 Route::post('/khalti', 'User\UserController@khalti')->name('khalti');
@@ -40,6 +35,9 @@ Route::post('/profile/update', 'User\UserController@store')->name('store.photos'
 Route::post('/profile/album', 'User\UserController@album')->name('store.album');
 Route::get('/profile/photos', 'User\UserController@photos')->name('profile.photos');
 Route::get('/profile/photos/delete/{id}', 'User\UserController@deleteImg')->name('profile.photos.delete');
+Route::get('/profile/upgrade', 'User\UserController@upgrade')->name('profile.upgrade');
+
+
 
 
 Route::prefix('admin')->group(function(){
@@ -69,10 +67,6 @@ Route::prefix('admin')->group(function(){
     Route::get('/news/update/{news}', 'Admin\NewsController@update')->name('admin.news.update.get');
     Route::post('/news/update/{news}', 'Admin\NewsController@update_news')->name('admin.news.update');
     Route::get('/news', 'Admin\NewsController@index')->name('admin.news');
-    Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');
-
-
-
-   
+    Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');   
 
 });

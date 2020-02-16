@@ -73,8 +73,9 @@ class NewsController extends Controller
             $fileNameToStored = str::random(4).time().'.'.$file->getClientOriginalName();;
             //resize the images
             $img = Image::make($file)
-                ->resize(1200,675)
-                ->save(public_path('news_img/'.$fileNameToStored));
+                ->resize(1200, 630, function($constraint) {
+                    $constraint->aspectRatio();
+                   })->save(public_path('news_img/'.$fileNameToStored));
                 $news->image = $fileNameToStored; 
         }
         $news->title = ucfirst($request->title);

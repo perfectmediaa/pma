@@ -12,7 +12,19 @@
 .thumb{
   margin-top: 15px;
   margin-bottom: 15px;
+  height: 300px;
+  
+  
 
+}
+.thumb img{
+  object-fit: scale-down;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -20,7 +32,7 @@
 @section('content')
 
 
-<div class="container">
+<div class="container mb-5">
     @include('user.head')
     @if ($message = Session::get('success'))
     
@@ -59,7 +71,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle">upload Profile Image</h5>
+                  <h5 class="modal-title" id="exampleModalCenterTitle">upload Profile Images</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -119,8 +131,12 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  @if ($user->paid==1)
                   <button class="btn btn-success upload-image" type="submit"> Upload Image</button>
                 </form>
+                @else
+                <p class="btn btn-success upload-image"> Upgrate Account</p>
+                @endif
                 </div>
               </div>
             </div>
@@ -131,17 +147,17 @@
 	<div class="row">
 		<div class="row">
             @forelse ($images as $image)
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb border border-dark">
                 <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
                    data-image="/images/{{$image->image}}"
                    data-target="#image-gallery">
                     <img class="img-thumbnail"
                          src="/images/{{$image->image}}"
-                         alt="Another alt text">
+                         alt="images">
                 </a>
-              <a href="{{route('profile.photos.delete',$image->id)}}"><button type="button" id="delete" class="btn btn-outline-danger btn-sm mx-1">Delete
+              <a class="d-flex justify-content-center" href="{{route('profile.photos.delete',$image->id)}}"><button type="button" id="delete" class="btn btn-outline-danger btn-sm mx-1">Delete
                 </button></a>
-                
+                 
             </div>
             @empty
             <div class=" alert alert-warning my-5 mx-3 px-3">

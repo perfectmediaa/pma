@@ -1,16 +1,23 @@
 @extends('layouts.app')
 <style>
-    img{width:100%;}
-    h2{
-        color: black;
-    }
-    p{
-        color: black;
-    }
+   img{width:100%;}
+	.news-image{
+    height: 300px;
+    border: 1px solid #ddd;
+	}
+	.news-image img {
+    object-fit: fill;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
 </style>
 @section('content')
 
-<div class="container my-5">
+<div class="container my-5 text-dark">
 	<div class="row">
 		<div class="col-md-9">
 		    <div class="row mb-2">
@@ -24,16 +31,12 @@
 		                            </div>
 		                            <div class="news-cats">
 		                                <ul class="list-unstyled list-inline mb-1">
-		                                    <li class="list-inline-item">
-		                                            <i class="fa fa-home text-danger"></i>
-    		                                        <small>Perfect Media Academy</small>
-		                                    </li>
 		                                     <li class="list-inline-item">
-		                                            <i class="fa fa-map text-danger"></i>
+		                                            <i class="fa fa-home text-danger"></i>
     		                                        <small>Kathmandu</small> 
 		                                    </li>
 		                                     <li class="list-inline-item">
-		                                            <i class="fa fa-info text-danger"></i>
+		                                            <i class="fa fa-check-circle text-danger"></i>
                                              <small>{{$news->created_at->format('d-m-Y')}}</small>
 		                                    </li>
 		                                  
@@ -44,7 +47,7 @@
 		                            </div>
 		                            <hr>
 		                            <div class="news-image">
-                                    <img src="/news_img/{{$news->image }}" height="300px"">
+                                    <img src="/news_img/{{$news->image }}">
 		                                
 		                            </div>
 		                            <div class="news-content text-dark my-2">

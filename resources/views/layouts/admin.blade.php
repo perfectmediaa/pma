@@ -156,7 +156,7 @@ body {
                 </button>
               </nav>
         
-              <div class="container-fluid">
+              <div class="container-fluid text-dark">
                 @yield('content')
               </div>
             </div>
