@@ -70,7 +70,8 @@ class HomeController extends Controller
         ]);
         $search =  $request->input('search');
         if($search!=""){
-            $users = User::with('album')->where('name','LIKE',"%$request->search%")->paginate(12);
+            $users = User::with('album')->where('name','LIKE',"%$request->search%")
+            ->orWhere('email','LIKE',"%$request->search%")->paginate(12);
             $users->appends(['search' => $search]);
             return view('all_models',compact('users'));
         }else{
@@ -112,6 +113,9 @@ class HomeController extends Controller
             return view('all_videos',compact('videos'));
         }
         
+    }
+    public function about(){
+        return view('about');
     }
 
 }

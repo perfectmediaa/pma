@@ -53,27 +53,29 @@ class PhotosController extends Controller
     public function albumid(Request $request)
 
     {
-
         $data = [];
-
-
         if($request->has('q')){
-
             $search = $request->q;
-
             $data = Album::select("id","name")
-
             		->where('name','LIKE',"%$search%")->latest()
-
             		->get();
-
         }
-
-
         return response()->json($data);
-
-    
     }
+
+    public function videoid(Request $request)
+
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Video::select("id","name")
+            		->where('name','LIKE',"%$search%")->latest()
+            		->get();
+        }
+        return response()->json($data);
+    }
+
     public function albumidget(Request $request){
         dd($request->all());
     }
@@ -104,7 +106,8 @@ class PhotosController extends Controller
     public function add_video(Request $request){
         $this->validate($request,[
             'name' => 'required',
-            'url' => 'required|url'
+            'url' => 'required|url',
+            
         ]);
           $url = $request->url;
         
@@ -113,6 +116,7 @@ class PhotosController extends Controller
             $video = new Video;
             $video->name = $request->name;
             $video->video = $finalUrl;
+            $video->user_id = $request->user;
             $video->display = true;
             $video->save();
             return response()->json('success');

@@ -44,7 +44,7 @@
 		                        </div>
 		                        <div class="col-md-8">
 		                            <div class="d-flex news-title justify-content-between">
-                                    <a href="{{route('single.news',$item->slug)}}"><h4>{{$item->title}}</h4></a>
+                                    <a href="{{route('admin.news.view',$item->id)}}"><h4>{{$item->title}}</h4></a>
                                     <p class="text-right text-success">
                                         @if($item->status==1) Public
                                         @else Private
@@ -78,7 +78,7 @@
                                     </p>
 		                            </div>
 		                            <div class="news-buttons">
-                                        <a href="{{route('single.news',$item->slug)}}"> <button type="button" class="btn btn-outline-danger btn-sm">Read More</button> </a>
+                                        <a href="{{route('admin.news.view',$item->id)}}"> <button type="button" class="btn btn-outline-danger btn-sm">Read More</button> </a>
                                     <a href="{{route('admin.news.update',$item->id)}}"> <button class="btn btn-secondary btn-sm mx-3 ">Modify</button></a>
                                         <a href="{{route('admin.news.delete',$item->id)}}"> <button class="btn btn-danger btn-sm float-right">Remove</button></a>
 		                            </div>

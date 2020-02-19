@@ -4,8 +4,7 @@
 <script src="https://khalti.com/static/khalti-checkout.js"></script>
 @section('content')
 <div class="container mt-5 text-dark">
-    <div id="khalti"><button type="button" class="btn btn-primary btn float-right" id="kbtn" data-toggle="modal" data-target="#khalti-modal">Add Balance</button></div>
-  <h4 class="text-center">Wallet {{ $wallet->balance}} </h4>
+  <h4 class="text-right">Wallet {{ $wallet->balance}} </h4>
   <br>
   
 <div id="khalti-modal" class="modal fade" role="dialog">
@@ -61,7 +60,20 @@
         </div>
     </div>
   </div>
-  <div class="row pt-20" style="padding-top:20px">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4>How to add fund</h4>
+    </div>
+    <div class="card-body text-start">
+      <h5 class="card-title">you can fund your wallet using various payment methods </b></h5>
+      <div id="khalti"><button type="button" class="btn btn-primary btn float-right" id="kbtn" data-toggle="modal" data-target="#khalti-modal">Add Balance</button></div>
+    </div>
+</div>
+<div class="card-header text-center mt-5">
+    <h5>Transactions</h5>
+  </div>
+  <div class="row mb-5">
+    
     <table class="table">
         <thead>
           <tr>
@@ -83,11 +95,11 @@
             @else
             @foreach ($tranx as $tran)
                <tr>
-            <td>{{$tran->created_at}}</td>
+            <td>{{$tran->created_at->format('d/m/y')}}</td>
             <td>{{$tran->amount}}</td>
             <td>{{$tran->type}}</td>
             <td>{{$tran->note}}</td>
-            <td><button class="btn btn-success">completed </button></td>
+            <td><button class="btn btn-success">done </button></td>
               </tr> 
             @endforeach
             @endif

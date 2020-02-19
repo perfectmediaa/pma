@@ -21,6 +21,12 @@ class CreateProfilesTable extends Migration
             $table->string('age')->nullable();
             $table->string('address')->nullable();
             $table->text('experience')->nullable();
+            $table->string('hair')->nullable();
+            $table->string('height')->nullable();
+            $table->string('eyes')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('interest')->nullable();
             $table->timestamps();
         });
     }

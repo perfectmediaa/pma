@@ -94,5 +94,9 @@ class NewsController extends Controller
             $news->delete();
         return redirect()->route('admin.news')->with('success', 'Your News Has been successfully Removed');
     }
+    public function view_news(News $news){
+        
+        return view('admin.single_news',compact('news'));     
+    }
 
 }

@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="row justify-content-end">
-    <a href="{{route('admin.all.videos')}}"> <button class="btn btn-success mx-3">All videos</button></a>
+    <a href="{{route('admin.all.videos')}}"> <button class="btn btn-primary mx-3">All videos</button></a>
   </div>    
 
   <div class="row">
@@ -58,6 +58,15 @@
           <h4 class="py-3 bg-success text-white text-center"> Add New video </h4>
       <form id="VideoUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
   
+      <div class="form-group">
+  
+        <label>Attach User:</label>
+  
+        <select class="itemName form-control"  name="user"></select> <br> <br>
+
+  
+      </div>
+
       <div class="form-group">
   
         <label>Video Title:</label>
@@ -78,7 +87,7 @@
   
       <div class="form-group">
   
-        <button class="btn btn-success upload-image" id="send_form" type="submit">Submit</button>
+        <button class="btn btn-success upload-image float-right" id="send_form" type="submit">Submit</button>
   
       </div>
   
@@ -86,39 +95,17 @@
     </form>
         </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="py-3 bg-primary text-white text-center"> Add New Images to Album </h3> 
-     <div class="row justify-content-center">
-        
-        <div class="form-group pt-5">
-    <form id="file-upload-form" class="uploader" action="{{route('admin.photos.store')}}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-        @csrf
-        
-        <select class="itemName form-control"  name="album"></select> <br> <br>
-        <input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
-        <span class="text-danger">{{ $errors->first('images') }}</span>
-        <div id="thumb-output"></div>
-        <br>
-        <button type="submit" class="btn btn-primary float-right">Upload Photos</button>
-        </form>
-     </div>
-    </div>
-        </div>
-      </div>
-    </div>
+    </div> 
   </div>
 </div>
 <script>
        $('.itemName').select2({
 
-placeholder: 'Select an album',
+placeholder: 'Select an video',
 
 ajax: {
 
-  url: '/admin/albumid',
+  url: '{{route('admin.userid')}}',
 
   dataType: 'json',
 

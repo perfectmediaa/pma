@@ -1,6 +1,32 @@
 @extends('layouts.admin')
 @section('content')
 <div class="container">
+  <div class="row my-5 justify-content-end">
+    <form action="">
+      <div class="form-row">
+        <div class="col">
+          <select name="type" class="form-control">
+            <option value="1">Free Member</option>
+            <option value="2">Form filled Members</option>
+            <option value="3">Paid Members</option>
+            <option value="4">Our Members</option>
+          </select>
+        </div>
+        <div class="col">
+          <select name="paid" class="form-control">
+            <option value="1">Paid</option>
+            <option value="0">Free</option>
+          </select>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" name="search" placeholder="Name or phone">
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-success btn-sm">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
   @php
    $i =1;   
   @endphp

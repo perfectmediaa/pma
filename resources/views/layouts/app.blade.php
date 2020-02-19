@@ -67,6 +67,9 @@
                             <a class="nav-link" href="{{ route('videos.get') }}">{{ __('Videos') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about.page') }}">{{ __('About') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('all.news') }}">{{ __('News') }}</a>
                         </li>
                         @auth

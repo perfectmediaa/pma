@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Album;
 use App\Http\Controllers\Controller;
+use App\Modelform;
 use App\User;
 use App\User\Profile;
 use Illuminate\Http\Request;
@@ -15,7 +14,16 @@ class Userscontroller extends Controller
     {
         $this->middleware('auth:admin');
     }
-    public function index(){
+    public function index(Request $request){
+        if($request->paid!=""){
+            $users = User::where(['paid' => $request->paid, 'type'=> $request->type])->
+            where(function($query) use ($request){
+                $query->where('name','LIKE',"%$request->search%")
+                ->orWhere('email','LIKE',"%$request->search%");
+            })->paginate(12);
+            $users->appends(['search' => $request->search]);
+            return view('admin.users',compact('users'));
+        }
         $users = User::latest()->get();
         return view('admin.users',['users' => $users]);
         
@@ -62,6 +70,23 @@ class Userscontroller extends Controller
         $id->update($request->all());
         return response()->json($request->experience);
         
+    }
+    public function userid(Request $request)
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = User::select("id","name")->where('paid',1)
+            		->where('name','LIKE',"%$search%")->latest()
+            		->get();
+        }
+        return response()->json($data);
+    }
+    public function forms(){
+        $total = Modelform::count();
+        $forms = Modelform::with('user')->latest('id')->paginate(12);
+        return view('admin.forms', compact('forms','total'));
+
     }
    
 }

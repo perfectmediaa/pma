@@ -26,6 +26,8 @@ Route::get('/news/{slug}', 'HomeController@single_news')->name('single.news');
 Route::get('/models', 'HomeController@models')->name('models.get');
 Route::get('/photos', 'HomeController@albums')->name('albums.get');
 Route::get('/videos', 'HomeController@videos')->name('videos.get');
+Route::get('/about', 'HomeController@about')->name('about.page');
+
 
 Route::get('/wallet', 'User\UserController@get_wallet')->name('get.wallet');
 Route::post('/khalti', 'User\UserController@khalti')->name('khalti');
@@ -34,8 +36,15 @@ Route::get('/profile/update', 'User\UserController@update')->name('update');
 Route::post('/profile/update', 'User\UserController@store')->name('store.photos');
 Route::post('/profile/album', 'User\UserController@album')->name('store.album');
 Route::get('/profile/photos', 'User\UserController@photos')->name('profile.photos');
+Route::get('/profile/videos', 'User\UserController@videos')->name('profile.videos');
 Route::get('/profile/photos/delete/{id}', 'User\UserController@deleteImg')->name('profile.photos.delete');
 Route::get('/profile/upgrade', 'User\UserController@upgrade')->name('profile.upgrade');
+Route::get('/profile/final', 'User\UserController@upgrade_show')->name('profile.upgrade.final.get');
+Route::post('/profile/final', 'User\UserController@upgrade_final')->name('profile.upgrade.final');
+Route::post('/profile/update-pass', 'User\UserController@update_pass')->name('User.pass.change');
+
+
+
 
 
 
@@ -50,6 +59,7 @@ Route::prefix('admin')->group(function(){
     Route::post('/videos', 'Admin\PhotosController@add_video')->name('admin.video.store');
     Route::post('/album', 'Admin\PhotosController@album')->name('admin.album');
     Route::get('/albumid', 'Admin\PhotosController@albumid')->name('admin.albumid');
+    Route::get('/userid', 'Admin\UsersController@userid')->name('admin.userid');
     Route::get('/albumsall', 'Admin\PhotosController@all_album')->name('admin.all.albums');
     Route::get('/videosall', 'Admin\PhotosController@all_videos')->name('admin.all.videos');
     Route::get('/single-album/{album}', 'Admin\PhotosController@single_album')->name('admin.single.albums');
@@ -65,8 +75,11 @@ Route::prefix('admin')->group(function(){
     Route::get('/news/create', 'Admin\NewsController@create')->name('admin.news.create');
     Route::post('/news/create', 'Admin\NewsController@store')->name('admin.news.store');
     Route::get('/news/update/{news}', 'Admin\NewsController@update')->name('admin.news.update.get');
+    Route::get('/news/view/{news}', 'Admin\NewsController@view_news')->name('admin.news.view');
     Route::post('/news/update/{news}', 'Admin\NewsController@update_news')->name('admin.news.update');
     Route::get('/news', 'Admin\NewsController@index')->name('admin.news');
-    Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');   
+    Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');
+    Route::get('/forms', 'Admin\UsersController@forms')->name('admin.froms');
+
 
 });

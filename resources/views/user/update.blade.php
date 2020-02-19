@@ -5,7 +5,36 @@
 @include('user.head')
 
 <div class="container my-3 text-dark">
-  
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Awesome!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="sms">Your operation has been completed.</p>
+            </div>
+            <div class="modal-footer">
+                <a href=""><button class="btn btn-success btn-block" data-dismiss="modal">OK</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myMod" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Opps!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="err"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+  </div>  
   <br>
     <div class="row">
         <div class="col-sm-6">
@@ -15,19 +44,22 @@
                 <form id="account" method="post" action="javascript:void(0)">
                     @csrf
                     <div class="form-group">
-                      <label for="formGroupExampleInput">Name</label>
+                      <label for="formGroupExampleInput">Full Name</label>
                       <input type="text" name="name" class="form-control" id="name" value="{{$user->name}}">
-                      <span class="text-danger">{{ $errors->first('name') }}</span>
+                     
                     </div>
                     <div class="form-group">
                       <label for="email">Email Id</label>
                       <input type="text" name="email" class="form-control" id="email" value="{{$user->email}}">
-                      <span class="text-danger">{{ $errors->first('email') }}</span>
+                      
                     </div>      
                     <div class="form-group">
-                      <label for="mobile_number">Password</label>
-                      <input type="text" name="mobile_number" class="form-control" id="mobile_number" placeholder="Please enter mobile number" maxlength="10">
-                      <span class="text-danger">{{ $errors->first('mobile_number') }}</span>
+                      <label for="mobile_number">Mobile</label>
+                      <h5  class="form-control"> {{$user->mobile}} </h5>
+                    </div>
+                    <div class="form-group">
+                      <label>City:</label>
+                      <input type="text" name="height" id="height" class="form-control" value="{{$user->city}}" >
                     </div>
                     <div class="alert alert-success d-none" id="msg_div">
                             <span id="res_message"></span>
@@ -38,6 +70,59 @@
                   </form>
             </div>
           </div>
+
+            <div class="card">
+      
+                <div class="card-header text-center">Change Password</div>
+                <div class="card-body">
+      
+                    <form id="pass_change" method="POST" action="javascript:void(0)">
+      
+                        @csrf 
+      
+                        <div class="form-group">
+      
+                            <label> Currnet Password</label>
+      
+                                <input id="password" type="password" class="form-control" name="current_password" autocomplete="current-password">
+
+      
+                        </div>
+      
+      
+      
+                        <div class="form-group ">
+      
+                            <label>New Password</label>
+                              <input id="new_password" type="password" class="form-control" name="new_password" autocomplete="current-password">
+      
+                        </div>
+      
+                        <div class="form-group ">
+                            <label>New Confirm Password</label>
+                          
+                                <input id="confirm_password" type="password" class="form-control" name="confirm_password" autocomplete="current-password">
+                          
+                        </div>
+                        <div class="form-group row mb-0">
+      
+                            <div class="col-md-8 offset-md-4">
+      
+                                <button type="submit" id="pass_form" class="btn btn-success float-right">
+      
+                                    save
+      
+                                </button>
+      
+                            </div>
+      
+                        </div>
+      
+                    </form>
+      
+                </div>
+      
+            </div>
         </div>
         <div class="col-sm-6">
             <div class="card">
@@ -54,20 +139,40 @@
                     </div>
         
                     <div class="form-group">
-        
-                        <label>Address:</label>
-        
-                    <input type="text" name="address" id="address" class="form-control" value="{{$user->profile->address}}" >
-        
+                        <label>Hair Color:</label>
+                        <input type="text" name="hair" id="hair" class="form-control" value="{{$user->profile->hair}}" >
                     </div>
-        
+                    <div class="form-group">
+                      <label>Height:</label>
+                      <input type="text" name="height" id="height" class="form-control" value="{{$user->profile->height}}" >
+                    </div>
+                    <div class="form-group">
+                      <label>Eyes Color:</label>
+                      <input type="text" name="eyes" id="eyes" class="form-control" value="{{$user->profile->eyes}}" >
+                    </div>
+                    <div class="form-group">
+                      <label>Weight:</label>
+                      <input type="text" name="weight" id="weight" class="form-control" value="{{$user->profile->weight}}" >
+                    </div>
+                    <div class="form-group">
+                      <label>Mobile:</label>
+                      <input type="text" name="mobile" id="mobile" class="form-control" value="{{$user->profile->mobile}}" >
+                    </div>
+                    <div class="form-group">
+                      <label>Interests:</label>
+                      <input type="text" name="interest" id="interest" class="form-control" value="{{$user->profile->interest}}" >
+                    </div>
                     <div class="form-group">
         
-                        <strong>Experience:</strong>
-        
-                    <input type="textarea" name="experience" id="experience" class="form-control" value="{{$user->profile->experience}}" >
-        
-                    </div>
+                      <label>Address:</label>
+      
+                  <input type="text" name="address" id="address" class="form-control" value="{{$user->profile->address}}" >
+      
+                  </div>
+                  <div class="form-group">
+                    <label for="exp">Example textarea</label>
+                    <textarea class="form-control" name="experience" id="experience" rows="3" value="{{$user->profile->experience}}"></textarea>
+                  </div>
         
                     <div class="form-group">
         
@@ -82,14 +187,14 @@
         
     </div>     
     
-    
+   
     
     
 </div>
 <script>
   //-----------------
   $(document).ready(function(){
-  $('#send_form').click(function(e){
+  $('#pass_form').click(function(e){
      e.preventDefault();
      /*Ajax Request Header setup*/
      $.ajaxSetup({
@@ -98,29 +203,33 @@
         }
     });
   
-     $('#send_form').html('Sending..');
+     $('#pass_form').html('Updating..');
      
      /* Submit form data using ajax*/
      $.ajax({
-        url: "{{ url('jquery-ajax-form-submit')}}",
+        url: "{{ route('User.pass.change')}}",
         method: 'post',
-        data: $('#contact_us').serialize(),
-        success: function(response){
-           //------------------------
-              $('#send_form').html('Submit');
-              $('#res_message').show();
-              $('#res_message').html(response.msg);
-              $('#msg_div').removeClass('d-none');
-  
-              document.getElementById("contact_us").reset(); 
-              setTimeout(function(){
-              $('#res_message').hide();
-              $('#msg_div').hide();
-              },10000);
-           //--------------------------
-        }});
+        data: $('#pass_change').serialize(),
+        success: function(data){
+          
+              $('#pass_form').html('Save');
+              $('#pass_change').trigger("reset");
+              $("#myModal").modal("show");   
+            
+        },
+        error: function (xhr) {
+                  $('#err').html('');
+                  $.each(xhr.responseJSON.errors, function(key,value) {
+                    $('#err').append('<h5>'+value+'</h5>');
+                }); 
+                $('#pass_form').html('Save');
+                $("#myMod").modal("show");
+
+                },
+
+        });
      });
   });
-  //-----------------
+  
   </script>
 @endsection

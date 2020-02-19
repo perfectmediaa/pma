@@ -99,16 +99,16 @@
         <div class="section-heading center-holder">
             <h3>Become our Model</h3>
             <div class="section-heading-line"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                <br>incididunt ut labore et dolore magna aliqua.</p>
+            <p>Modeling as a career has become a much-vaunted choice now with thousands of aspirants chasing the dream of becoming the next supermodel. Those days are over when you could depend on your luck to get spotted, the chances of that happening are one-in-a-million now. To become a model, it takes discipline, effort, and perseverance. You need to plan, prepare, and follow a strategy to stand out and get noticed. We have spoken to several successful models and agencies and put together a list of tips below that you must follow to break 
+                into the modeling industry and kickstart your modeling career. So here's how to get started in modeling:</p>
         </div>
         <div class="row mt-60">
             <div class="col-md-4 col-sm-12 col-12">
                 <div class="serv-section-2">
                     <div class="serv-section-2-icon"> <i class="fas fa-gem"></i> </div>
                     <div class="serv-section-desc">
-                        <h4>Planning</h4>
-                        <h5>Business Planning</h5> </div>
+                        <h4>PhotoShoot</h4>
+                        <h5>Indoor and Outdoor</h5> </div>
                     <div class="section-heading-line-left"></div>
                 </div>
             </div>
@@ -116,8 +116,8 @@
                 <div class="serv-section-2 serv-section-2-act">
                     <div class="serv-section-2-icon serv-section-2-icon-act"> <i class="fas fa-cogs"></i> </div>
                     <div class="serv-section-desc">
-                        <h4>Management</h4>
-                        <h5>Retirement Planning</h5> </div>
+                        <h4>Interview</h4>
+                        <h5>Self, Game Show</h5> </div>
                     <div class="section-heading-line-left"></div>
                    
                 </div>
@@ -126,8 +126,8 @@
                 <div class="serv-section-2">
                     <div class="serv-section-2-icon"> <i class="fas fa-signature"></i> </div>
                     <div class="serv-section-desc">
-                        <h4>Accumulation</h4>
-                        <h5>Support and Sell</h5> </div>
+                        <h4>RampWalk Training</h4>
+                        <h5>Test, Fashion Show</h5> </div>
                     <div class="section-heading-line-left"></div>
                     
                 </div>
@@ -138,8 +138,8 @@
                 <div class="serv-section-2">
                     <div class="serv-section-2-icon"> <i class="fas fa-shield-alt"></i> </div>
                     <div class="serv-section-desc">
-                        <h4>Security </h4>
-                        <h5>Secure Business</h5> </div>
+                        <h4>Acting</h4>
+                        <h5>Class,Test,Competitions</h5> </div>
                     <div class="section-heading-line-left"></div>
                     
                 </div>
@@ -148,8 +148,8 @@
                 <div class="serv-section-2 serv-section-2-act">
                     <div class="serv-section-2-icon serv-section-2-icon-act"> <i class="far fa-clock"></i> </div>
                     <div class="serv-section-desc">
-                        <h4>24/7 Available </h4>
-                        <h5>All time available </h5> </div>
+                        <h4>Dancing </h4>
+                        <h5>Test, Class, Training </h5> </div>
                     <div class="section-heading-line-left"></div>
                    
                 </div>
@@ -158,8 +158,8 @@
                 <div class="serv-section-2">
                     <div class="serv-section-2-icon"> <i class="fas fa-signature"></i> </div>
                     <div class="serv-section-desc">
-                        <h4> Customer Support </h4>
-                        <h5>Support and Sell</h5> </div>
+                        <h4> Guaranteed Offer </h4>
+                        <h5>Poster & Video Ads</h5> </div>
                     <div class="section-heading-line-left"></div>
                     
                 </div>
@@ -172,8 +172,8 @@
                 </div>
                 <div class="card-body text-start">
                   <h5 class="card-title">You are currently a <b> Basic Member </b></h5>
-                  <p class="card-text">You can send your info filling as a model registration from.</p>
-                  <a href="#" class="btn btn-primary float-right">Open Form</a>
+                  <p class="card-text">You can send your info filling up model registration from.</p>
+                <a href="{{route('modalform')}}" class="btn btn-primary float-right">Open Form</a>
                 </div>
             </div>
             <div class="card">
@@ -183,7 +183,7 @@
                 <div class="card-body text-start">
                   <h5 class="card-title">You are currently a <b> Basic Member </b></h5>
                   <p class="card-text">you can fund your wallet using various payment methods.</p>
-                  <a href="#" class="btn btn-primary float-right">Add fund</a>
+                  <a href="{{route('get.wallet')}}" class="btn btn-primary float-right">Add fund</a>
                 </div>
             </div>
         </div>

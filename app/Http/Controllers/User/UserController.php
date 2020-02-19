@@ -8,13 +8,14 @@ use App\Image;
 use App\Modelform;
 use App\User;
 use App\User\Transaction;
+use App\User\Video;
 use App\User\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image as Ima;
 use File;
-
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -248,5 +249,84 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.upgrade',compact('user'));
     }
+    public function upgrade_show(){
+        if(!Auth::user()->paid){
+            $user = Auth::user()->with('wallet')->first();
+            return view('user.final_Pay',compact('user'));
+        }else{
+            return redirect()->route('profile');
+        }
+        
+    }
+    public function upgrade_final(Request $request){
+        if(!Auth::user()->paid){
+            $charge = 2000;
+            $user = Auth::user();
+            if(Auth::user()->wallet->balance>= $charge){
+                $wallet = Wallet::where('user_id',$user->id)->first();
+                        $wallet->balance = ($wallet->balance - $charge);
+                        $wallet->save();
+                $user->paid = 1;
+                $user->type =3;
+                $user->save();
+                    Transaction::create([
+                        'user_id' => $id,
+                        'amount' => $charge,
+                        'type' => 'sent',
+                        'note' => "Purchase Paid Membership",
+                    ]);
 
+                return redirect()->route('profile')->with('success', 'Your account has been upgraded');
+            }
+            else{
+                return back()->with('success', 'Your balance is insufficent please add balace and try again');
+            }
+           
+        }
+        return redirect()->route('profile');
+        
+    }
+    public function videos(){
+        $videos = Video::where('user_id', Auth::id())->latest()->get();
+        return view('user.my_videos',compact('videos'));
+    }
+    public function update_pass(Request $request){
+    $this->validate($request, [
+            'current_password'     => 'required',
+            'new_password'     => 'required|min:6',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+    
+        if(Hash::check($request->current_password, Auth::user()->password)){
+    
+            User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+            return response()->json('success');
+    
+        }else{
+    
+            return response()->json([
+                'message' => 'invalid',
+                'errors' => [
+                    'inval' => 'Your current Password is incorrect',
+                ],
+            ], 422);
+    
+        }
+    }
+    public function update_account(Request $request){
+        $this->validate($request, [
+            'name'     => 'required',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile' => 'required|digits:10|unique:users',
+            'city' => 'sometimes|max:30'
+        ]);
+    }
+    public function update_profile(Request $request){
+        $this->validate($request, [
+            'name'     => 'required',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile' => 'required|digits:10|unique:users',
+            'city' => 'sometimes|max:30'
+        ]);
+    }
 }

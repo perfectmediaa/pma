@@ -71,7 +71,7 @@
 		                            <div class="news-author">
 		                                <div class="row">
                                             <div class="col-md-auto">
-                                                    <a href="#" title="ameer"><img src="//www.gravatar.com/avatar/021e64775176cc4c7018e5e867f17de2?s=250&d=mm&r=x" alt="Author image" class="rounded-circle" style="width:100px"></a>
+                                                    <a href="#" title="Biswajit Saha"><img src="//www.gravatar.com/avatar/021e64775176cc4c7018e5e867f17de2?s=250&d=mm&r=x" alt="Author image" class="rounded-circle" style="width:100px"></a>
                                             </div>
                                             <div class="col">
                                                 <div class="auth-title">
@@ -104,17 +104,15 @@
 		             <div class="row">
         		      <div class="col-md-12">
         		          <div class="card">
-        		            <div class="card-body text-success">
-        		                <h5>Recent News</h5>
-        		            </div>
+        		            <div class="card-body text-success text-center">
+        		                <h5>@if($news->status==1) News is Public
+                                    @else News is Private
+                                    @endif</h5>
+                            </div>
+                            <a class="d-flex justify-content-center" href="{{route('admin.news.update',$news->id)}}"> <button class="btn btn-success">Modify This News</button></a>
         		           </div>
         		      </div>
         		     </div>
-		             <div class="list-group ">
-                         @foreach ($recent as $item)
-                     <a href="{{route('single.news',$item->slug)}}" class="list-group-item list-group-item-action text-primary ">{{$item->title}}</a>
-                         @endforeach
-                    </div> 
 		           </div>
 		      </div>
 		     </div>

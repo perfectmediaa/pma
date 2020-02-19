@@ -30,7 +30,9 @@
    @endif
    
     <div class="row">
+        
         @foreach ($videos as $video)
+
         <div class="col-lg-3 col-md-4 col-xs-4">
                 <img class="img-thumbnail w-100"
                      src="https://img.youtube.com/vi/{{$video->video}}/0.jpg"
@@ -43,11 +45,11 @@
             <a href="{{route('admin.video.delete', $video->id)}}">
                 <button type="button" class="btn btn-danger mx-2 ">
                 delete
-                </button>
             </a>
-            
+
         </div>
         @endforeach
+        
         <div class="modal fade" id="album" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">

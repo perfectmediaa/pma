@@ -19,6 +19,8 @@ class CreateAlbumsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->string('cover_image')->nullable();
+            $table->boolean('status')->default(false);
+            $table->boolean('public')->default(false);
             $table->timestamps();
         });
     }
