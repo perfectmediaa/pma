@@ -30,7 +30,7 @@
         <div class="col-lg-3 col-md-4 col-xs-4">
             <a href="{{route('photos',$album->id)}}">
                 <img class="img-thumbnail w-100 img-responsive"
-                     src="/albums/{{empty($album->cover_image)? 'default.jpg' : $album->cover_image }}"
+                     src="/albums/{{empty($album->cover_image)? 'album.jpg' : $album->cover_image }}"
                      alt="album" style="width:100%; height:350px">
             
             <p class="px-1">{{$album->name}}</p>

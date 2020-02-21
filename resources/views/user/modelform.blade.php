@@ -5,6 +5,7 @@
 <div class="container my-5 text-dark">
   @auth 
   <h4 class="text-right text-success mx-2">wallet {{ $wallet->balance}} </h4>
+  
   @endauth
   <h1 class="text-center">Model Registration form </h1>
   <br>

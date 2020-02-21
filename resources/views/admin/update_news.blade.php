@@ -78,8 +78,8 @@
                 
                 <div class="col-sm-9">
                     <select class="form-control" name="status">
-                        <option value="1">Public</option>
-                        <option value="0"> Private</option>
+                        <option value="1" @if($news->status==1) selected @endif>Public</option>
+                        <option value="0" @if($news->status==0) selected @endif> Private</option>
                     </select>
                 </div>
             </div>

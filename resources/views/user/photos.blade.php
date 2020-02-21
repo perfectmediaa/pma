@@ -12,13 +12,11 @@
 .thumb{
   margin-top: 15px;
   margin-bottom: 15px;
-  height: 300px;
-  
-  
+  height: 300px; 
 
 }
 .thumb img{
-  object-fit: scale-down;
+  object-fit: cover;
     min-width: 100%;
     min-height: 100%;
     width: auto;

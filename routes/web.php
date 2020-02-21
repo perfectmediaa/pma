@@ -42,10 +42,8 @@ Route::get('/profile/upgrade', 'User\UserController@upgrade')->name('profile.upg
 Route::get('/profile/final', 'User\UserController@upgrade_show')->name('profile.upgrade.final.get');
 Route::post('/profile/final', 'User\UserController@upgrade_final')->name('profile.upgrade.final');
 Route::post('/profile/update-pass', 'User\UserController@update_pass')->name('User.pass.change');
-
-
-
-
+Route::post('/profile/update-account', 'User\UserController@update_account')->name('User.account.update');
+Route::post('/profile/update-profile', 'User\UserController@update_profile')->name('User.profile.update');
 
 
 
@@ -65,9 +63,12 @@ Route::prefix('admin')->group(function(){
     Route::get('/single-album/{album}', 'Admin\PhotosController@single_album')->name('admin.single.albums');
     Route::get('/photo/delete/{id}', 'Admin\PhotosController@deleteImg')->name('photos.delete');
     Route::get('/users', 'Admin\UsersController@index')->name('admin.user');
-    Route::get('/profile/{id}', 'Admin\UsersController@profile')->name('admin.profile');
-    Route::post('/account/edit/{id}', 'Admin\UsersController@accountedit')->name('admin.accountedit');
+    Route::get('/profile/{user}', 'Admin\UsersController@profile')->name('admin.profile');
+    Route::post('/account/edit/{user}', 'Admin\UsersController@accountedit')->name('admin.accountedit');
     Route::post('/profile/edit/{id}', 'Admin\UsersController@profileedit')->name('admin.profileedit');
+    Route::post('/profile/wallet/{user}', 'Admin\UsersController@wallet')->name('admin.profile.wallet');
+    Route::post('/profile/album/{user}', 'Admin\UsersController@albumedit')->name('admin.profile.album');
+    Route::post('/profile/type/{user}', 'Admin\UsersController@profile_type')->name('admin.profile.type');
     Route::post('/albumid', 'Admin\PhotosController@albumidget')->name('admin.albumidd');
     Route::post('/album-edit/{album}', 'Admin\PhotosController@album_update')->name('admin.album.update');
     Route::post('/video/update/{video}', 'Admin\PhotosController@video_update')->name('admin.video.update');
@@ -80,6 +81,5 @@ Route::prefix('admin')->group(function(){
     Route::get('/news', 'Admin\NewsController@index')->name('admin.news');
     Route::get('/news/delete/{news}', 'Admin\NewsController@delete')->name('admin.news.delete');
     Route::get('/forms', 'Admin\UsersController@forms')->name('admin.froms');
-
 
 });

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Perfect Media Academy')
 <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{{ asset('js/home.js') }}" defer></script>
@@ -39,7 +40,8 @@ line-height: 50px;
 
 .mainn {
     width: 100%;
-background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
+    height: 400px;
+background-image: url("https://i.ytimg.com/vi/VyiKSfMaAW8/maxresdefault.jpg");
 
 }
   
@@ -88,7 +90,8 @@ background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
         <div class="col text-dark">
             <p style ="text-align: justify;
             ">Perfect Media Academy, place where you can get verities of opportunities. Since 2018, we have been running this academy. Every individual aim to be part of media field and want to pursue their carrier in it. We are here to guide you and promote you as well. Here, you can get lots of learning and earning ideas. We provide you training classes related to this field such as Acting, classes, Direction, Personality Development classes and most importantly confident building classes. We too help you to come out with your hidden talents.
-            <a href="">
+            <br>
+        <a href="{{route('about.page')}}">
                 <button class="btn btn-success btn-sm">Read More</button>
             </a>
             </p>
@@ -168,7 +171,7 @@ background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
                         <div class="frontside">
                             <div class="card">
                                 <div class="card-body text-center text-dark">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png" alt="card image"></p>
+                                    <p><img class=" img-fluid" src="/assets/rajan.jpg" alt="rajan"></p>
                                     <h4 class="card-title">Rajan Karki</h4>
                                     <h5 class="card-text"> <b> C.E.O </b></h5>
                                     <p class="card-text py-3">Business Man, Actor & Social Worker</p>
@@ -427,7 +430,7 @@ background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
                         <div class="backside">
                             <div class="card">
                                 <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
+                                    <h4 class="card-title">Sankar Karki</h4>
                                     <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">

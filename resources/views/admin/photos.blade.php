@@ -44,14 +44,6 @@
           <h4 class="py-3 bg-success text-white text-center"> Add New Album </h4>
       <form id="imageUploadForm" action="javascript:void(0)" enctype="multipart/form-data">
   
-  
-        <div class="alert alert-danger print-error-msg" style="display:none">
-  
-          <ul></ul>
-  
-      </div>
-  
-  
       <div class="form-group">
   
         <label>Album Title:</label>
@@ -59,7 +51,16 @@
         <input type="text" name="title" class="form-control" placeholder="Add Title" required>
   
       </div>
-  
+      <div class="form-group">
+        
+        <label>Show in Home Page:</label>
+
+        <select name="show" class="form-control">
+          <option value="1">YES</option>
+          <option value="0">NO</option>
+        </select>
+
+    </div>
   
       <div class="form-group">
   
@@ -72,7 +73,7 @@
   
       <div class="form-group">
   
-        <button class="btn btn-success upload-image" type="submit">Upload Image</button>
+        <button class="btn btn-success upload-image" id="send_img" type="submit">Upload Image</button>
   
       </div>
   
@@ -147,7 +148,7 @@ ajax: {
 $(document).ready(function (e) {
      
      $('#imageUploadForm').on('submit',(function(e) {
-      
+      $("#send_img").prop('disabled', true);
      $.ajaxSetup({
       
      headers: {
@@ -179,7 +180,7 @@ $(document).ready(function (e) {
         processData: false,
       
         success:function(data){
-         
+          $("#send_img").prop('disabled', false);
          $("#myModal").modal("show");
          $('#imageUploadForm').trigger("reset");
         },

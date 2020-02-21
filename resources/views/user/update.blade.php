@@ -59,8 +59,23 @@
                     </div>
                     <div class="form-group">
                       <label>City:</label>
-                      <input type="text" name="height" id="height" class="form-control" value="{{$user->city}}" >
+                      <input type="text" name="city" id="city" class="form-control" value="{{$user->city}}" maxlength="30">
                     </div>
+                    <div class="form-group">
+                      <label>Bio</label>
+                      <input type="text" class="form-control" name="bio" value="{{$user->bio}}" maxlength="60">
+                    </div>
+                    <div class="form-group">
+        
+                      <label>Gender:</label>
+      
+                      <select name="gender" class="form-control">
+                        <option value="" @if($user->gender=="") selected @endif>Not set</option>
+                        <option value="1"  @if($user->gender==1) selected @endif>Male</option>
+                        <option value="2"  @if($user->gender==2) selected @endif>Female</option>
+                      </select>
+      
+                  </div>
                     <div class="alert alert-success d-none" id="msg_div">
                             <span id="res_message"></span>
                     </div>
@@ -134,7 +149,7 @@
         
                         <label>Age:</label>
         
-                    <input type="text" name="age" id="age" class="form-control" value="{{$user->profile->age}}" >
+                    <input type="text" name="age" id="age" class="form-control" value="{{$user->profile->age}}" maxlength="2">
         
                     </div>
         
@@ -152,7 +167,7 @@
                     </div>
                     <div class="form-group">
                       <label>Weight:</label>
-                      <input type="text" name="weight" id="weight" class="form-control" value="{{$user->profile->weight}}" >
+                      <input type="text" name="weight" id="weight" class="form-control" value="{{$user->profile->weight}}" maxlength="3">
                     </div>
                     <div class="form-group">
                       <label>Mobile:</label>
@@ -166,12 +181,12 @@
         
                       <label>Address:</label>
       
-                  <input type="text" name="address" id="address" class="form-control" value="{{$user->profile->address}}" >
+                  <input type="text" name="address" id="address" class="form-control" value="{{$user->profile->address}}" maxlength="70">
       
                   </div>
                   <div class="form-group">
-                    <label for="exp">Example textarea</label>
-                    <textarea class="form-control" name="experience" id="experience" rows="3" value="{{$user->profile->experience}}"></textarea>
+                    <label for="exp">Experience</label>
+                    <textarea class="form-control" name="experience" id="experience" rows="3" maxlength="600">{{$user->profile->experience}}</textarea>
                   </div>
         
                     <div class="form-group">
@@ -192,7 +207,6 @@
     
 </div>
 <script>
-  //-----------------
   $(document).ready(function(){
   $('#pass_form').click(function(e){
      e.preventDefault();
@@ -231,5 +245,78 @@
      });
   });
   
-  </script>
+    $(document).ready(function(){
+    $('#send_account').click(function(e){
+       e.preventDefault();
+       /*Ajax Request Header setup*/
+       $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+    
+       $('#send_account').html('Updating..');
+       
+       /* Submit form data using ajax*/
+       $.ajax({
+          url: "{{ route('User.account.update')}}",
+          method: 'post',
+          data: $('#account').serialize(),
+          success: function(data){
+            
+                $('#send_account').html('Save');
+                $("#myModal").modal("show");   
+              
+          },
+          error: function (xhr) {
+                    $('#err').html('');
+                    $.each(xhr.responseJSON.errors, function(key,value) {
+                      $('#err').append('<h5>'+value+'</h5>');
+                  }); 
+                  $('#send_account').html('Save');
+                  $("#myMod").modal("show");
+  
+                  },
+  
+          });
+       });
+    });
+    
+    $(document).ready(function(){
+    $('#send_profile').click(function(e){
+       e.preventDefault();
+       /*Ajax Request Header setup*/
+       $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+    
+       $('#send_profile').html('Updating..');
+       
+       /* Submit form data using ajax*/
+       $.ajax({
+          url: "{{ route('User.profile.update')}}",
+          method: 'post',
+          data: $('#profile').serialize(),
+          success: function(data){
+            
+                $('#send_profile').html('Save');
+                $("#myModal").modal("show");   
+              
+          },
+          error: function (xhr) {
+                    $('#err').html('');
+                    $.each(xhr.responseJSON.errors, function(key,value) {
+                      $('#err').append('<h5>'+value+'</h5>');
+                  }); 
+                  $('#send_profile').html('Save');
+                  $("#myMod").modal("show");
+  
+                  },
+  
+          });
+       });
+    });
+    </script>
 @endsection

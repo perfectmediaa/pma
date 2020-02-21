@@ -26,6 +26,9 @@
     </div>
 
    @endif
+   <div class="my-3">
+    <h4 class="text-center">{{$album->name}}</h4>
+   </div>
    <div class="row justify-content-end my-4">
     <button type="button" class="btn btn-primary mx-3" data-toggle="modal" data-target="#album">
         Update Album
@@ -55,6 +58,26 @@
                     <input type="text" name="title" class="form-control" value="{{$album->name}}" required>
               
                   </div>
+                  <div class="form-group">
+        
+                    <label>Show in Homepage:</label>
+    
+                    <select name="public" class="form-control">
+                      <option value="1"  @if($album->public==1) selected @endif>YES</option>
+                      <option value="0"  @if($album->public==0) selected @endif>NO</option>
+                    </select>
+    
+                </div>
+                <div class="form-group">
+        
+                  <label>Searchable</label>
+  
+                  <select name="sta" class="form-control">
+                    <option value="1"  @if($album->status==1) selected @endif>YES</option>
+                    <option value="0"  @if($album->status==0) selected @endif>NO</option>
+                  </select>
+  
+              </div>
               
               
                   <div class="form-group">
@@ -67,7 +90,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button class="btn btn-success upload-image" type="submit"> Upload Image</button>
+          <button class="btn btn-success upload-image" type="submit"> Update Album</button>
         </form>
         </div>
       </div>

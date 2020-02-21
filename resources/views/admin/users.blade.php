@@ -34,8 +34,10 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">status</th>
+            <th scope="col">type</th>
             <th scope="col">Action</th>
 
           </tr>
@@ -45,7 +47,9 @@
           <tr>
           <th scope="row">{{$i++}}</th>
             <td>{{$user->name}}</td>
-            <td>{{$user->email}}</td>
+            <td>{{$user->mobile}}</td>
+            <td>@if($user->paid==1) paid @else Free @endif</td>
+            <td>@if($user->type==4) PMA Member @else Out Member @endif</td>
           <td><a href="{{route('admin.profile', $user->id)}}"><button class="btn btn-danger">view</button></a></td>
           </tr>
           @endforeach

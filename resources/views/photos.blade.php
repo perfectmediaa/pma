@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Photos Perfect Media')
 <style>
 .btn:focus, .btn:active, button:focus, button:active {
   outline: none !important;
@@ -16,7 +17,7 @@
 
 }
 .thumb img{
-  object-fit: scale-down;
+  object-fit: cover;
     min-width: 100%;
     min-height: 100%;
     width: auto;

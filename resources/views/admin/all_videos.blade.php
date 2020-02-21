@@ -40,11 +40,11 @@
             <p class="mx-2">{{$video->name}}</p>
             
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#album">
-                update
+                Update
             </button>
-            <a href="{{route('admin.video.delete', $video->id)}}">
+            <a class="text-white" href="{{route('admin.video.delete', $video->id)}}">
                 <button type="button" class="btn btn-danger mx-2 ">
-                delete
+                Delete
             </a>
 
         </div>
@@ -71,6 +71,16 @@
                             <input type="text" name="name" class="form-control" value="{{$video->name}}">
                       
                           </div>
+                          <div class="form-group">
+        
+                            <label>Show in Homepage:</label>
+            
+                            <select name="display" class="form-control">
+                              <option value="1"  @if($video->display==1) selected @endif>YES</option>
+                              <option value="0"  @if($video->display==0) selected @endif>NO</option>
+                            </select>
+            
+                        </div>
                       
                 </div>
                 <div class="modal-footer">
@@ -82,8 +92,9 @@
             </div>
           </div>
     </div>
+    <div class="d-flex row mb-2 justify-content-end">
+      {{ $videos->render() }}
+  </div>
 </div>
-<script>
-    
-</script>
+
 @endsection

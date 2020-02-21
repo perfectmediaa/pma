@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Image;
 use App\Modelform;
 use App\User;
+use App\User\Profile;
 use App\User\Transaction;
 use App\User\Video;
 use App\User\Wallet;
@@ -88,7 +89,7 @@ class UserController extends Controller
     }
     public function get_wallet(){
         $wallet = Wallet::where('user_id',Auth::user()->id)->first();
-        $tranx = Transaction::where('user_id',Auth::user()->id)->latest()->paginate(8);
+        $tranx = Transaction::where('user_id',Auth::user()->id)->latest('id')->paginate(8);
         return view('user.wallet', compact('wallet','tranx'));
 
     }
@@ -175,6 +176,7 @@ class UserController extends Controller
 
         $this->validate($request, [
             'images' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,JPEG,JPG,PNG|max:7098',
             ]);
         
             if(Auth::user()->paid){
@@ -183,8 +185,9 @@ class UserController extends Controller
                     foreach ($files as $file){
                         $gallery = new Image;
                         $image_name = str::random(5).time().$file->getClientOriginalName();
-                        $img = Ima::make($file)->resize(1200, 675,
-                           )
+                        $img = Ima::make($file)->resize(1200, 675, function($constraint) {
+                            $constraint->aspectRatio();
+                           })
                         ->save(public_path('images/'.$image_name));
                         $gallery['image'] = $image_name;
                         $gallery['album_id'] = $album;
@@ -201,7 +204,7 @@ class UserController extends Controller
 
     public function photos(){
         $user = Auth::user();
-        $images = Image::where('album_id',$user->album->id)->get();
+        $images = Image::where('album_id',$user->album->id)->latest('id')->get();
         return view('user.photos', compact('images','user'));
     }
 
@@ -210,7 +213,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
         'title' => 'required',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'required|image|mimes:jpeg,png,jpg,JPEG,JPG,PNG|max:7078',
     ]);
     $album = Album::where('user_id',Auth::id())->first();
     $this->authorize('update', $album);
@@ -314,19 +317,47 @@ class UserController extends Controller
         }
     }
     public function update_account(Request $request){
+        $user = Auth::user();
         $this->validate($request, [
-            'name'     => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile' => 'required|digits:10|unique:users',
-            'city' => 'sometimes|max:30'
+            'name'     => 'required|max:40',
+            'email' => 'required|max:50|email|unique:users,email,'.$user->id,
+            'city' => 'required|max:30',
+            'bio' => 'sometimes|max:60',
+            'gender' => 'required'
         ]);
+        $user->email = $request->email;
+        $user->name = ucwords(strtolower($request->name));
+        $user->city = ucwords(strtolower($request->city));
+        $user->bio = ucfirst($request->bio);
+        $user->gender = $request->gender;
+        $user->save();
+        return response()->json('success');
     }
     public function update_profile(Request $request){
         $this->validate($request, [
-            'name'     => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile' => 'required|digits:10|unique:users',
-            'city' => 'sometimes|max:30'
+            'age'     => 'sometimes|digits:2',
+            'hair' => 'sometimes|max:15',
+            'height' => 'sometimes|max:10',
+            'eyes' => 'sometimes|max:15',
+            'weight' => 'sometimes|max:10',
+            'mobile' => 'sometimes|max:10',
+            'interest' => 'sometimes|max:300',
+            'address' => 'sometimes|max:70',
+            'experience' => 'sometimes|max:900',
         ]);
+        if(Auth::user()->paid==1){
+            $profile = Auth::user()->profile;
+            $profile->update($request->all());
+            return response()->json('success');
+
+        }else{
+            return response()->json([
+                'message' => 'not member',
+                'errors' => [
+                    'member' => 'Please purchase Membership to add your Info',
+                ],
+            ], 422);
+        }
+        
     }
 }

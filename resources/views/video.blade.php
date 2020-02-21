@@ -42,7 +42,7 @@
 		                            </div>
 		                            <div class="news-content text-dark my-2">
                                         
-		                                video descrip
+		                                Video Descricption
 		                                
 		                            </div>
 		        

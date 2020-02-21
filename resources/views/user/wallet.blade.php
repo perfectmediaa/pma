@@ -65,7 +65,7 @@
       <h4>How to add fund</h4>
     </div>
     <div class="card-body text-start">
-      <h5 class="card-title">you can fund your wallet using various payment methods </b></h5>
+      <h5 class="card-title">click on add fund. Then, you can fund your wallet using various payment methods </b></h5>
       <div id="khalti"><button type="button" class="btn btn-primary btn float-right" id="kbtn" data-toggle="modal" data-target="#khalti-modal">Add Balance</button></div>
     </div>
 </div>

@@ -13,8 +13,11 @@
                         <div class="inner-content">
                             <h3 class="title">Personallity</h3>
                             <p class="description ">
-                                <h5>Name: Ameer</h5>
-                                <h5>Address: Ameer</h5>
+                            <h5><b> Age:</b> {{$user->profile->age}}</h5>
+                            <h5><b> Height:</b> {{$user->profile->height}}</h5>
+                            <h5><b> Weight:</b> {{$user->profile->weight}}</h5>
+                            <h5><b> Hair:</b> {{$user->profile->hair}}</h5>
+                            <h5><b> Location:</b> {{$user->city}}</h5>
                             </p>
                         </div>
                     </div>
@@ -25,8 +28,8 @@
                         <div class="inner-content">
                             <h3 class="title">Education</h3>
                             <p class="description">
-                                <h5>School Name: Ameer</h5>
-                                <h5>College: Ameer</h5>
+                                <h5>Not set yet</h5>
+                               
                             </p>
                         </div>
                     </div>
@@ -37,7 +40,14 @@
                         <div class="inner-content">
                             <h3 class="title">Interests</h3>
                             <p class="description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ex odio, rhoncus sit amet tincidunt eu, suscipit a orci. In suscipit quam eget dui auctor.
+                                @empty($user->profile->interest)
+                                <h5>No interest Set yet</h5>
+                                @else
+                                <h5> </h5>
+                                    {{$user->profile->interest}}
+                                @endempty
+                               
+                                
                             </p>
                         </div>
                     </div>
@@ -48,8 +58,13 @@
                         <div class="inner-content">
                             <h3 class="title">Experiences</h3>
                             <p class="description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ex odio, rhoncus sit amet tincidunt eu, suscipit a orci. In suscipit quam eget dui auctor.
-                            </p>
+                                @empty($user->profile->experience)
+                                <h5>Experience has not set Yet.....</h5> 
+                                @else
+                                {{$user->profile->experience}}
+                                @endempty
+                                
+                                
                         </div>
                     </div>
                 </div>

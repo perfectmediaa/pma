@@ -14,21 +14,11 @@ use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+   
     public function index()
     {
-        $albums = Album::latest()->get();
-        $videos = Video::latest()->get();
+        $albums = Album::where('public',true)->latest('id')->take(8)->get();
+        $videos = Video::where('display',true)->latest('id')->take(8)->get();
         $news = News::latest('id')->where('status',1)->take(3)->get();
         return view('index', compact('albums','videos','news'));
     }
@@ -39,13 +29,22 @@ class HomeController extends Controller
         return view('index', compact('albums','videos','news'));
     }
     public function info(User $user){
-        return view('profile',compact('user'));
+        if($user->paid==1){
+            return view('profile',compact('user'));
+        }else{
+            return redirect()->route('index');
+        }
     }
     
 
     public function photos(Album $photo){
-        $images = Image::where('album_id', $photo->id)->get();
-        return view('photos', compact('images','photo'));
+        if($photo->status==1){
+            $images = Image::where(['album_id' => $photo->id])->latest('id')->get();
+             return view('photos', compact('images','photo'));
+        }else{
+           return redirect()->route('index');
+        }
+        
     }
     public function video(Video $video){
         return view('video', compact('video'));
@@ -55,7 +54,7 @@ class HomeController extends Controller
         $news = News::where("slug", $slug)->where('status',1)->first();
         $recent = News::latest('id')->where('status',1)->take(5)->get();
     	if(!$news){
-            abort('404');
+            return redirect()->route('index');
         }
         return view('single_news',compact('news','recent'));
     }
@@ -87,12 +86,12 @@ class HomeController extends Controller
         ]);
         $search =  $request->input('search');
         if($search!=""){
-            $albums = Album::where('name','LIKE',"%$request->search%")->paginate(12);
+            $albums = Album::where('status',1)->where('name','LIKE',"%$request->search%")->paginate(12);
             
             $albums->appends(['search' => $search]);
             return view('all_albums',compact('albums'));
         }else{
-            $albums = Album::latest('id')->paginate(8);
+            $albums = Album::where('status',1)->latest('id')->paginate(8);
             return view('all_albums',compact('albums'));
         }
         

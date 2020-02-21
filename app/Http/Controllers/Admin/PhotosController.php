@@ -32,6 +32,7 @@ class PhotosController extends Controller
         $this->validate($request, [
         'title' => 'required',
         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'show' => 'required'
     ]);
     
     
@@ -39,12 +40,16 @@ class PhotosController extends Controller
             $fileNameToStored = str::random(4).time().'.'.$file->getClientOriginalName();;
             //resize the images
             $img = Image::make($file)
-                ->resize(1000,1000)
+                ->resize(1080, 1080, function($constraint) {
+                    $constraint->aspectRatio();
+                   })
                 ->save(public_path('albums/'.$fileNameToStored));
 
                 $album = new Album();
-                $album->name = $request->title;
+                $album->name = ucwords(strtolower($request->title));
                 $album->cover_image = $fileNameToStored;
+                $album->public = $request->show;
+                $album->status = 1;
                 $album->save();
                 return response()->json(['success'=>'done']);  
         }
@@ -77,7 +82,7 @@ class PhotosController extends Controller
     }
 
     public function albumidget(Request $request){
-        dd($request->all());
+        
     }
     public function store(request $request) {
 
@@ -91,7 +96,9 @@ class PhotosController extends Controller
                     $gallery = new Imz;
                     $image_name = str::random(5).time().$file->getClientOriginalName();
                     $img = Image::make($file)
-                    ->encode('jpg', 75)
+                    ->resize(1200, 675, function($constraint) {
+                        $constraint->aspectRatio();
+                       })
                     ->save(public_path('images/'.$image_name));
                     $gallery['image'] = $image_name;
                     $gallery['album_id'] = $request->album;
@@ -114,7 +121,7 @@ class PhotosController extends Controller
             parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
             $finalUrl = $my_array_of_vars['v'];
             $video = new Video;
-            $video->name = $request->name;
+            $video->name = ucwords(strtolower($request->name));
             $video->video = $finalUrl;
             $video->user_id = $request->user;
             $video->display = true;
@@ -122,9 +129,15 @@ class PhotosController extends Controller
             return response()->json('success');
         
     }
-    public function all_album()
-    {
-        $albums = Album::latest()->get();
+    public function all_album(Request $request)
+    {   $search =  $request->input('search');
+        if($search!=""){
+            $albums = album::where('status',$request->search)->latest('id')
+            ->paginate(12);
+            $albums->appends(['search' => $search]);
+            return view('admin.album',compact('albums'));
+        }
+        $albums = Album::latest('id')->paginate(12);
         return view('admin.album',compact('albums'));
     }
     public function single_album(Album $album){
@@ -148,39 +161,49 @@ class PhotosController extends Controller
         $this->validate($request, [
         'title' => 'required',
         'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:3148',
+        'public' => 'required',
+        'sta' => 'required'
     ]);
     if($file = $request->file('image')){
             $fileNameToStored = str::random(4).time().'.'.$file->getClientOriginalName();;
             //resize the images
             $img = Image::make($file)
-                ->resize(1000,1000)
+                ->resize(1080, 1080, function($constraint) {
+                    $constraint->aspectRatio();
+                   })
                 ->save(public_path('albums/'.$fileNameToStored));
                 $oldImage = public_path("albums/{$album->cover_image}");
                 if (is_file($oldImage)) { // unlink or remove previous image from folder
                     unlink($oldImage);
                 }
-                $album->name = $request->title;
+                $album->name = ucwords(strtolower($request->title));
                 $album->cover_image = $fileNameToStored;
+                $album->status = $request->status;
+                $album->public = $request->public;
                 $album->save();
                 return back()->with('success', 'Data Your image has been successfully added');
         }
         else{
             $album->name = $request->title;
+            $album->status = $request->sta;
+            $album->public = $request->public;
             $album->save();
             return back()->with('success', 'Data Your image has been successfully added');
         }
     }
     public function all_videos()
     {
-        $videos = Video::latest()->get();
+        $videos = Video::latest('id')->paginate(12);
         return view('admin.all_videos',compact('videos'));
     }
 
     public function video_update(Video $video, Request $request){
         $this->validate($request,[
-            'name' => 'required'
+            'name' => 'required',
+            'display' => 'required'
         ]);
-        $video->name = $request->name;
+        $video->name = ucwords(strtolower($request->name));
+        $video->display = $request->display;
         $video->save();
         return back()->with('success', 'Data Your video has been successfully Updated');
 

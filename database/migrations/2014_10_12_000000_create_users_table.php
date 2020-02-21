@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->enum('type',[1,2,3,4,5,6])->default(1);
             $table->boolean('paid')->default(false);
+            $table->string('bio')->nullable();
+            $table->enum('gender',[1,2])->nullable();
             $table->timestamps();
         });
     }

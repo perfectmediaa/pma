@@ -10,6 +10,6 @@ class Profile extends Model
         return $this->belongsTo('App\User');
     }
     protected $fillable = [
-        'user_id','age','address','experience'
+        'user_id','age','address','experience','hair','height','eyes','weight','mobile','interest',
     ];
 }

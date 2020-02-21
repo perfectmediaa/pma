@@ -71,13 +71,13 @@
 		                            <div class="news-author">
 		                                <div class="row">
                                             <div class="col-md-auto">
-                                                    <a href="#" title="Biswajit Saha"><img src="//www.gravatar.com/avatar/021e64775176cc4c7018e5e867f17de2?s=250&d=mm&r=x" alt="Author image" class="rounded-circle" style="width:100px"></a>
-                                            </div>
+												<a href="https://www.facebook.com/perfectmediaacademy/" title="ameer"><img src="/assets/pma_logo.jpg" alt="Author image" class="rounded-circle" style="width:100px"></a>
+											</div>
                                             <div class="col">
                                                 <div class="auth-title">
-                                                    <h4 class="author h4"><a href="#">Ameer Tamang</a></h4>
+                                                    <h4 class="author h4"><a href="#">Perfect Media Academy</a></h4>
                                                     <div class="bio text-dark">
-                                                        Manager and news supervisor
+                                                       Best Modeling Academy in Nepal
                                                     </div>
                                                     <ul class="list-unstyled list-inline">
                                                         <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>

@@ -13,6 +13,6 @@ class Album extends Model
         return $this->hasMany('App\Image');
     }
     protected $fillable = [
-        'user_id','name','cover_image'
+        'user_id','name','cover_image','status','public'
     ];
 }
